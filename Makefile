@@ -13,10 +13,9 @@ t1 = main
 t2 = judge
 t3 = execute
 t4 = language
-t5 = language
-t6 = address
+t5 = data
 
-obj = $(t1).o $(t2).o $(t3).o $(t4).o
+obj = $(t1).o $(t2).o $(t3).o $(t4).o $(t5).o
 
 all: $(bin)
 $(bin): $(obj)
