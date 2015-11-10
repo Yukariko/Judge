@@ -22,8 +22,8 @@ private:
 	void initCommand();
 
 	int langIdx;
-	char **compileCommand;
-	char **runCommand;
+	const char **compileCommand;
+	const char **runCommand;
 };
 
 #endif

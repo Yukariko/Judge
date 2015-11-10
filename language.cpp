@@ -43,16 +43,16 @@ void Language::initCommand()
 	switch(langIdx)
 	{
 	case C:
-		compileCommand = new char *[7] {"gcc", "-o", "test", "-std=c99", "-O2", nullptr, nullptr};
-		runCommand = new char *[3] {"test", "test", nullptr};
+		compileCommand = new const char *[7] {"gcc", "-o", "test", "-std=c99", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
 		break;
 	case CPP:
-		compileCommand = new char *[6] {"g++", "-o", "test", "-O2", nullptr, nullptr};
-		runCommand = new char *[3] {"test", "test", nullptr};
+		compileCommand = new const char *[6] {"g++", "-o", "test", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
 		break;
 	case CPP11:
-		compileCommand = new char *[7] {"g++", "-o", "test", "-std=c++11", "-O2", nullptr, nullptr};
-		runCommand = new char *[3] {"test", "test", nullptr};
+		compileCommand = new const char *[7] {"g++", "-o", "test", "-std=c++11", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
 		break;
 	case JAVA:
 		break;
@@ -61,6 +61,8 @@ void Language::initCommand()
 
 char * const *Language::getCompileCommand(const string& codePath)
 {
+	char buf[256];
+	strcpy(buf, codePath.c_str());
 	switch(langIdx)
 	{
 	case C:
