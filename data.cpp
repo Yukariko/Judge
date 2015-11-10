@@ -31,7 +31,7 @@ const string& Data::getInputPath(int idx) const
 	return inputPaths[idx];
 }
 
-const string& getOutputPath(int idx) const
+const string& Data::getOutputPath(int idx) const
 {
 	return outputPaths[idx];
 }
