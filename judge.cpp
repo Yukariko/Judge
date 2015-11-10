@@ -10,7 +10,7 @@ Judge::Judge(const string& lang, const string& codePath, const string& dataPath)
 
 bool Judge::compile()
 {
-	const char * const *compileCommand = lang.getCompileCommand(codePath);
+	char * const *compileCommand = lang.getCompileCommand(codePath);
 	int status = exec.exec(compileCommand);
 
 	// Runtime Error
@@ -21,7 +21,7 @@ bool Judge::compile()
 
 int Judge::run()
 {
-	const char * const *runCommand = lang.getRunCommand();
+	char * const *runCommand = lang.getRunCommand();
 	int status = exec.exec(runCommand, data.getTimeLimit(), data.getMemoryLimit());
 	return status;
 }

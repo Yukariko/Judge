@@ -15,15 +15,15 @@ public:
 	Language(const string& lang);
 	Language(const Language& lang);
 	~Language();
-	const char * const *getCompileCommand(const string& codePath);
-	const char * const *getRunCommand();
+	char * const *getCompileCommand(const string& codePath);
+	char * const *getRunCommand();
 
 private:
 	void initCommand();
 
 	int langIdx;
-	const char * const *compileCommand;
-	const char * const *runCommand;
+	char * const *compileCommand;
+	char * const *runCommand;
 };
 
 #endif

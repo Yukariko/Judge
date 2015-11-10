@@ -14,7 +14,7 @@ class Execute
 {
 public:
 	Execute(const string& inputPath = "", const string& outputPath = "", const string& errorPath = "");
-	int exec(const char * const *cmd, int timeLimit = -1, int memoryLimit = -1);
+	int exec(char * const *cmd, int timeLimit = -1, int memoryLimit = -1);
 
 	void setInputPath(const string& inputPath);
 	void setOutputPath(const string& outputPath);

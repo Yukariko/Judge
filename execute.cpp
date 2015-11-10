@@ -27,7 +27,7 @@ const string& Execute::getErrorPath() const
 }
 
 
-int Execute::exec(const char * const *cmd, int timeLimit, int memoryLimit)
+int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 {
 	pid_t pid = fork();
 
