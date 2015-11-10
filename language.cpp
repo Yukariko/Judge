@@ -14,6 +14,9 @@ Language::Language(const string& lang)
 		exit(1);
 	}
 
+	compileCommand = nullptr;
+	runCommand = nullptr;
+
 	initCommand();
 }
 
