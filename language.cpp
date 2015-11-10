@@ -61,8 +61,6 @@ void Language::initCommand()
 
 char * const *Language::getCompileCommand(const string& codePath)
 {
-	char buf[256];
-	strcpy(buf, codePath.c_str());
 	switch(langIdx)
 	{
 	case C:
