@@ -3,25 +3,28 @@
 
 #include <iostream>
 #include "language.h"
+#include "data.h"
+#include "execute.h"
 
 using namespace std;
+
+typedef enum {ACCEPT, WRONG_ANSWER, COMPILE_ERROR, RUN_TIME_ERROR, TIME_LIMIT_EXCEED, MEMORY_LIMIT_EXCEED} result;
 
 class Judge
 {
 public:
-	Judge(const string& lang, const string& codePath, const string& inPath, const string& outPath, const string& errPath, int timeLimit, int memoryLimit);
+	Judge(const string& lang, const string& codePath, const string& dataPath);
 	bool compile();
 	bool run();
 
+	int doJudge();
 
 private:
 	Language lang;
 	Execute exec;
+	Data data;
 
 	string codePath;
-	string outPath;
-	int timeLimit;
-	int memoryLimit;
 };
 
 #endif

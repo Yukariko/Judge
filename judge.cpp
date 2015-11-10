@@ -1,11 +1,11 @@
 #include "judge.h"
 
-Judge::Judge(const string& lang, const string& codePath, const string& inPath, const string& outPath, const string& errPath, int timeLimit, int memoryLimit)
-	: lang(Language(lang)), codePath(codePath), outPath(outPath), timeLimit(timeLimit), memoryLimit(memoryLimit)
+Judge::Judge(const string& lang, const string& codePath, const string& dataPath)
+	: lang(Language(lang)), codePath(codePath)
 {
-	exec.setInPath(inPath);
+	data.setDataPath(dataPath);
 	exec.setOutPath("test.out");
-	exec.setErrPath(errPath);
+	exec.setErrPath("test.err");
 }
 
 bool Judge::compile()
@@ -22,7 +22,33 @@ bool Judge::compile()
 int Judge::run()
 {
 	const char **runCommand = lang.getRunCommand();
-	int status = exec.exec(runCommand, timeLimit, memoryLimit);
+	int status = exec.exec(runCommand, data.getTimeLimit(), data.getMemoryLimit());
+	return status;
+}
 
+int Judge::doJudge()
+{
+	if(!compile())
+		return COMPILE_ERROR;
 
+	int tc = data.getTestCaseNum();
+
+	for(int i=0; i < tc; i++)
+	{
+		const string& input = data.getInputPath(i);
+		const string& output = data.getoutputPath(i);
+
+		exec.setInputPath(input);
+		int ans = run();
+
+		// error
+		if(ans != 0)
+			return ans;
+
+		if(!check())
+			return WRONG_ANSWER;
+		
+	}
+
+	return ACCEPT;
 }
