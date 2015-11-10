@@ -1,14 +1,14 @@
 #include "judge.h"
+#include <cstdlib>
 
 int main(int argc, char *argv[])
 {
-	if(argc != 5)
+	if(argc != 8)
 	{
-		cout << "Usage: " << argv[0] << " " << "lang codePath inputPath outputPath errorPath" << endl;
+		cout << "Usage: " << argv[0] << " " << "lang codePath inputPath outputPath errorPath timeLimit memoryLimit" << endl;
 		return 0;
 	}
 
-	Language lang(argv[1]);
-	Judge judge(lang, argv[2], argv[3], argv[4]);
+	Judge judge(argv[1], argv[2], argv[3], argv[4], argv[5], atoi(argv[6]), atoi(argv[7]));
 	return 0;
 }

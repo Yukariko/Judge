@@ -1,23 +1,28 @@
 #include "judge.h"
-#include "compile.h"
 
-Judge::Judge(Language& lang, const string& codePath, const string& inPath, const string& outPath)
-//	: lang(lang), codePath(codePath), inPath(inPath), outPath(outPath) 
+Judge::Judge(const string& lang, const string& codePath, const string& inPath, const string& outPath, const string& errPath, int timeLimit, int memoryLimit)
+	: lang(Language(lang)), codePath(codePath), outPath(outPath), timeLimit(timeLimit), memoryLimit(memoryLimit)
 {
-	Compile compileManager(lang, codePath);
+	exec.setInPath(inPath);
+	exec.setOutPath("test.out");
+	exec.setErrPath(errPath);
+}
 
-	string ans;
+bool Judge::compile()
+{
+	const char **compileCommand = lang.getCompileCommand(codePath);
+	int status = exec.exec(compileCommand);
 
-	// compile success
-	if(compileManager.compile(ans))
-	{
+	// Runtime Error
+	if(status < 0)
+		return false;
+	return true;
+}
 
-	}
+int Judge::run()
+{
+	const char **runCommand = lang.getRunCommand();
+	int status = exec.exec(runCommand, timeLimit, memoryLimit);
 
-	// compile fail
-	else
-	{
-
-	}
 
 }

@@ -1,5 +1,7 @@
 #include "language.h"
 
+Language::Language() : langIdx(-1), compileCommand(nullptr), runCommand(nullptr) {}
+
 Language::Language(const string& lang)
 {
 	langIdx = 0;
@@ -12,26 +14,49 @@ Language::Language(const string& lang)
 		exit(1);
 	}
 
-	switch(langIdx)
-	{
-	case C:
-		cmd = new const char *[7] {"gcc", "-o", "test", "-std=c99", "-O2", nullptr, nullptr};
-		break;
-	case CPP:
-		cmd = new const char *[6] {"g++", "-o", "test", "-O2", nullptr, nullptr};
-		break;
-	case CPP11:
-		cmd = new const char *[7] {"g++", "-o", "test", "-std=c++11", "-O2", nullptr, nullptr};
-		break;
-	case JAVA:
-		break;
-	}
+	initCommand();
+}
+
+Language::Language(const Language& lang) : langIdx(lang.langIdx)
+{
+	initCommand();
 }
 
 Language::~Language() 
 {
-	if(cmd)
-		delete[] cmd;
+	if(compileCommand)
+		delete[] compileCommand;
+
+	if(runCommand)
+		delete[] runCommand;
+}
+
+
+void initCommand()
+{
+	if(compileCommand)
+		delete[] compileCommand;
+
+	if(runCommand)
+		delete[] runCommand;
+
+	switch(langIdx)
+	{
+	case C:
+		compileCommand = new const char *[7] {"gcc", "-o", "test", "-std=c99", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
+		break;
+	case CPP:
+		compileCommand = new const char *[6] {"g++", "-o", "test", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
+		break;
+	case CPP11:
+		compileCommand = new const char *[7] {"g++", "-o", "test", "-std=c++11", "-O2", nullptr, nullptr};
+		runCommand = new const char *[3] {"test", "test", nullptr};
+		break;
+	case JAVA:
+		break;
+	}
 }
 
 const char ** Language::getCompileCommand(const string& codePath)
@@ -51,4 +76,9 @@ const char ** Language::getCompileCommand(const string& codePath)
 		break;
 	}
 	return cmd;
+}
+
+const char ** Language::getRunCommand()
+{
+	return runCommand;
 }

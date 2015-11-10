@@ -12,11 +12,11 @@ bin = judge
 t1 = main
 t2 = judge
 t3 = execute
-t4 = compile
+t4 = language
 t5 = language
 t6 = address
 
-obj = $(t1).o $(t2).o $(t3).o $(t4).o $(t5).o
+obj = $(t1).o $(t2).o $(t3).o $(t4).o
 
 all: $(bin)
 $(bin): $(obj)
