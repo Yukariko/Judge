@@ -1,5 +1,6 @@
 #include "data.h"
 #include <cstdio>
+#include <assert.h>
 
 Data::Data() : testCaseNum(0)
 {
@@ -42,17 +43,18 @@ void Data::init()
 	outputPaths.clear();
 
 	FILE *fp = fopen(dataPath.c_str(), "r");
+	assert(fp == nullptr);
 
-	fscanf(fp, "%d", &testCaseNum);
-	fscanf(fp, "%d%d", &timeLimit, &memoryLimit);
+	assert(fscanf(fp, "%d", &testCaseNum) != 1);
+	assert(fscanf(fp, "%d%d", &timeLimit, &memoryLimit) != 2);
 
 	for(int i=0; i < testCaseNum; i++)
 	{
 		char buf[256];
-		fscanf(fp, "%s", buf);
+		assert(fscanf(fp, "%s", buf) != 1);
 		inputPaths.push_back(buf);
 
-		fscanf(fp, "%s", buf);
+		assert(fscanf(fp, "%s", buf) != 1);
 		outputPaths.push_back(buf);
 	}
 }
