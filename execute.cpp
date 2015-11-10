@@ -41,7 +41,7 @@ int Execute::exec(const char **cmd, int timeLimit, int memoryLimit)
 		if(errorPath != "")
 			freopen(errorPath.c_str(), "a+", stderr);
 
-		execlv(cmd[0], cmd);
+		execv(cmd[0], cmd);
 		return -1;
 	}
 
