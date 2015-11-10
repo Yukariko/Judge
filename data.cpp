@@ -1,7 +1,7 @@
 #include "data.h"
 #include <cstdio>
 
-Data::data() : testCaseNum(0)
+Data::Data() : testCaseNum(0)
 {
 }
 
@@ -38,7 +38,8 @@ const string& Data::getOutputPath(int idx) const
 
 void Data::init()
 {
-	testCasePaths.clear();
+	inputPaths.clear();
+	outputPaths.clear();
 
 	FILE *fp = fopen(dataPath.c_str(), "r");
 
