@@ -13,17 +13,21 @@ using namespace std;
 class Execute
 {
 public:
-	Execute(const string& inPath = "", const string& outPath = "", const string& errPath = "");
+	Execute(const string& inputPath = "", const string& outputPath = "", const string& errorPath = "");
 	int exec(const char **cmd, int timeLimit = -1, int memoryLimit = -1);
 
-	void setInPath(const string& inPath);
-	void setOutPath(const string& outPath);
-	void setErrPath(const string& errPath);
+	void setInputPath(const string& inputPath);
+	void setOutputPath(const string& outputPath);
+	void setErrorPath(const string& errorPath);
+
+	const string& getOutputPath() const;
+	const string& getInputPath() const;
+	const string& getErrorPath() const;
 
 private:
-	string inPath;
-	string outPath;
-	string errPath;
+	string inputPath;
+	string outputPath;
+	string errorPath;
 };
 
 #endif

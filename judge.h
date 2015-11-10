@@ -15,7 +15,8 @@ class Judge
 public:
 	Judge(const string& lang, const string& codePath, const string& dataPath);
 	bool compile();
-	bool run();
+	int run();
+	bool check(const string& answerPath, const string& outputPath);
 
 	int doJudge();
 

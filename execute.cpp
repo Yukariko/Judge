@@ -1,16 +1,29 @@
 #include "execute.h"
 
-void Execute::setInPath(const string& inPath)
+void Execute::setInputPath(const string& inputPath)
 {
-	this->inPath = inPath;
+	this->inputPath = inputPath;
 }
-void Execute::setOutPath(const string& outPath)
+void Execute::setOutputPath(const string& outputPath)
 {
-	this->outPath = outPath;
+	this->outputPath = outputPath;
 }
-void Execute::setErrPath(const string& errPath)
+void Execute::setErrorPath(const string& errorPath)
 {
-	this->errPath = errPath;
+	this->errorPath = errorPath;
+}
+
+const string& Execute::getOutputPath() const
+{
+	return outputPath;
+}
+const string& Execute::getInputPath() const
+{
+	return inputPath;
+}
+const string& Execute::getErrorPath() const
+{
+	return errorPath;
 }
 
 
@@ -21,12 +34,12 @@ int Execute::exec(const char **cmd, int timeLimit, int memoryLimit)
 	// child process
 	if(pid == 0)
 	{
-		if(inPath != "")
-			freopen(inPath.c_str(), stdin);
-		if(outPath != "")
-			freopen(outPath.c_str(), stdout);
-		if(errPath != "")
-			freopen(errPath.c_str(), stderr);
+		if(inputPath != "")
+			freopen(inputPath.c_str(), stdin);
+		if(outputPath != "")
+			freopen(outputPath.c_str(), stdout);
+		if(errorPath != "")
+			freopen(errorPath.c_str(), stderr);
 
 		execlv(cmd[0], cmd);
 	}

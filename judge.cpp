@@ -4,8 +4,8 @@ Judge::Judge(const string& lang, const string& codePath, const string& dataPath)
 	: lang(Language(lang)), codePath(codePath)
 {
 	data.setDataPath(dataPath);
-	exec.setOutPath("test.out");
-	exec.setErrPath("test.err");
+	exec.setOutputPath("test.out");
+	exec.setErrorPath("test.err");
 }
 
 bool Judge::compile()
@@ -26,6 +26,12 @@ int Judge::run()
 	return status;
 }
 
+bool Judge::check(const string& answerPath, const string& outputPath)
+{
+
+	return true;
+}
+
 int Judge::doJudge()
 {
 	if(!compile())
@@ -36,7 +42,7 @@ int Judge::doJudge()
 	for(int i=0; i < tc; i++)
 	{
 		const string& input = data.getInputPath(i);
-		const string& output = data.getoutputPath(i);
+		const string& answerPath = data.getOutputPath(i);
 
 		exec.setInputPath(input);
 		int ans = run();
@@ -45,7 +51,7 @@ int Judge::doJudge()
 		if(ans != 0)
 			return ans;
 
-		if(!check())
+		if(!check(answerPath, exec.getOutputPath()))
 			return WRONG_ANSWER;
 		
 	}
