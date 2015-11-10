@@ -35,13 +35,14 @@ int Execute::exec(const char **cmd, int timeLimit, int memoryLimit)
 	if(pid == 0)
 	{
 		if(inputPath != "")
-			freopen(inputPath.c_str(), stdin);
+			freopen(inputPath.c_str(), "r", stdin);
 		if(outputPath != "")
-			freopen(outputPath.c_str(), stdout);
+			freopen(outputPath.c_str(), "w", stdout);
 		if(errorPath != "")
-			freopen(errorPath.c_str(), stderr);
+			freopen(errorPath.c_str(), "a+", stderr);
 
 		execlv(cmd[0], cmd);
+		return -1;
 	}
 
 	// parent process
