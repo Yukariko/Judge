@@ -32,7 +32,7 @@ Language::~Language()
 }
 
 
-void initCommand()
+void Language::initCommand()
 {
 	if(compileCommand)
 		delete[] compileCommand;
@@ -64,18 +64,18 @@ char * const *Language::getCompileCommand(const string& codePath)
 	switch(langIdx)
 	{
 	case C:
-		cmd[5] = codePath.c_str();
+		compileCommand[5] = codePath.c_str();
 		break;
 	case CPP:
-		cmd[4] = codePath.c_str();
+		compileCommand[4] = codePath.c_str();
 		break;
 	case CPP11:
-		cmd[5] = codePath.c_str();
+		compileCommand[5] = codePath.c_str();
 		break;
 	case JAVA:
 		break;
 	}
-	return cmd;
+	return compileCommand;
 }
 
 char * const *Language::getRunCommand()
