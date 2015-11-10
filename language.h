@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const char *langs[] = {"C", "CPP", "CPP11", "JAVA", nullptr};
+static const char *langs[] = {"C", "CPP", "CPP11", "JAVA", nullptr};
 typedef enum {C,CPP,CPP11,JAVA} langCode;
 
 class Language

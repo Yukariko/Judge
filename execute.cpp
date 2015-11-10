@@ -1,5 +1,10 @@
 #include "execute.h"
 
+Execute::Execute(const string& inputPath, const string& outputPath, const string& errorPath)
+	: inputPath(inputPath), outputPath(outputPath), errorPath(errorPath)
+{
+}
+
 void Execute::setInputPath(const string& inputPath)
 {
 	this->inputPath = inputPath;
