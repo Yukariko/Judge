@@ -10,5 +10,7 @@ int main(int argc, char *argv[])
 	}
 
 	Judge judge(argv[1], argv[2], argv[3]);
+	judge.doJudge();
+	judge.printResult();
 	return 0;
 }

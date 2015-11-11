@@ -18,7 +18,8 @@ public:
 	int run();
 	bool check(const string& answerPath, const string& outputPath);
 
-	int doJudge();
+	void doJudge();
+	void printResult();
 
 private:
 	Language lang;
@@ -26,6 +27,11 @@ private:
 	Data data;
 
 	string codePath;
+
+	int resultAnswer;
+	int resultTime;
+	int resultMemory;
+	string resultMessage;
 };
 
 #endif

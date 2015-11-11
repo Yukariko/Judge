@@ -32,10 +32,26 @@ bool Judge::check(const string& answerPath, const string& outputPath)
 	return true;
 }
 
-int Judge::doJudge()
+void Judge::printResult()
+{
+	cout << resultAnswer;
+	if(resultAnswer == COMPILE_ERROR)
+		cout << resultMessage;
+	else
+		cout << resultTime << " " << resultMemory;
+}
+
+void Judge::doJudge()
 {
 	if(!compile())
-		return COMPILE_ERROR;
+	{
+		resultAnswer = COMPILE_ERROR;
+		return;
+	}
+
+	resultTime = 0;
+	resultMemory = 0;
+	resultMessage = "";
 
 	int tc = data.getTestCaseNum();
 
@@ -49,12 +65,19 @@ int Judge::doJudge()
 
 		// error
 		if(ans != 0)
-			return ans;
+		{
+			resultAnswer = ans;
+			return;
+		}
 
 		if(!check(answerPath, exec.getOutputPath()))
-			return WRONG_ANSWER;
+		{
+			resultAnswer = WRONG_ANSWER;
+			return;
+		}
 		
 	}
 
-	return ACCEPT;
+	resultAnswer = ACCEPT;
+	return;
 }
