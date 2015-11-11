@@ -56,10 +56,10 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 	// parent process
 	else
 	{
+		int status = 0;
 		struct rusage ruse;
 		while(true)
 		{
-			int status = 0;
 			wait4(pid, &status, 0, &ruse);
 
 			// 정상 종료
