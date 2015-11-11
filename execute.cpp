@@ -54,6 +54,21 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 		if(errorPath != "")
 			assert(freopen(errorPath.c_str(), "a+", stderr));
 
+		struct rlimit rlim;
+		
+		if(timeLimit != -1)
+		{
+			getrlimit(RLIMIT_CPU, &rlim);
+			rlim.rlim_cur = timeLimit;
+			setrlimit(RLIMIT_CPU, &rlim);
+		}
+		
+		if(memoryLimit != -1)
+		{
+			getrlimit(RLIMIT_AS, &rlim);
+			rlim.rlim_cur = memoryLimit * 1024 * 1024;
+			setrlimit(RLIMIT_AS, &rlim);
+		}
 		//ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
 
 		execvp(cmd[0], cmd);
