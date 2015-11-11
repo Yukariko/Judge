@@ -107,7 +107,7 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 			}
 		}
 
-		cout << ruse.ru_utime.tv_sec << " " << ruse.ru_utime.tv_usec << ruse.ru_maxrss << endl;
+		cout << ruse.ru_utime.tv_sec << " " << ruse.ru_utime.tv_usec << " " << ruse.ru_maxrss << endl;
 		return status;
 	}
 }
