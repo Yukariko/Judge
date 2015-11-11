@@ -12,6 +12,8 @@ bool Judge::compile()
 {
 	char * const *compileCommand = lang.getCompileCommand(codePath);
 	int status = exec.exec(compileCommand);
+	
+	cout << status << endl;
 
 	// Runtime Error
 	if(status < 0)
@@ -34,11 +36,11 @@ bool Judge::check(const string& answerPath, const string& outputPath)
 
 void Judge::printResult()
 {
-	cout << resultAnswer;
+	cout << resultAnswer << endl;
 	if(resultAnswer == COMPILE_ERROR)
-		cout << resultMessage;
+		cout << resultMessage << endl;
 	else
-		cout << resultTime << " " << resultMemory;
+		cout << resultTime << " " << resultMemory << endl;
 }
 
 void Judge::doJudge()
