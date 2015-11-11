@@ -1,5 +1,12 @@
 #include "execute.h"
 #include <assert.h>
+#include <unistd.h>
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/user.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 Execute::Execute(const string& inputPath, const string& outputPath, const string& errorPath)
 	: inputPath(inputPath), outputPath(outputPath), errorPath(errorPath)
