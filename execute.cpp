@@ -47,6 +47,8 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 		if(errorPath != "")
 			assert(freopen(errorPath.c_str(), "a+", stderr));
 
+		//ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
+
 		execvp(cmd[0], cmd);
 		exit(0);
 	}
@@ -54,10 +56,34 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 	// parent process
 	else
 	{
-		int status = 0;
-		waitpid(pid, &status, 0);
+		struct rusage ruse;
+		while(true)
+		{
+			int status = 0;
+			wait4(pid, &status, 0, &ruse);
 
+			// 정상 종료
+			if(WIFEXITED(status))
+			{
+				cout << "complete" << endl;
+				break;
+			}
 
+			int exitcode = WEXITSTATUS(status);
+
+			// 비정상 종료
+			if(exitcode != 0x05 && exitcode != 0)
+			{
+				cout << "not complete" << endl;
+				break;
+			}
+
+			if(WIFSIGNALED(status))
+			{
+				cout << "signaled" << endl;
+				break;
+			}
+		}
 		return status;
 	}
 }

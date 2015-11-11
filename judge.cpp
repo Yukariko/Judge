@@ -14,7 +14,7 @@ bool Judge::compile()
 	int status = exec.exec(compileCommand);
 	
 	// Runtime Error
-	if(status < 0)
+	if(status != 0)
 		return false;
 	return true;
 }
