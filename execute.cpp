@@ -1,4 +1,5 @@
 #include "execute.h"
+#include <assert.h>
 
 Execute::Execute(const string& inputPath, const string& outputPath, const string& errorPath)
 	: inputPath(inputPath), outputPath(outputPath), errorPath(errorPath)
@@ -40,14 +41,14 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 	if(pid == 0)
 	{
 		if(inputPath != "")
-			freopen(inputPath.c_str(), "r", stdin);
+			assert(freopen(inputPath.c_str(), "r", stdin));
 		if(outputPath != "")
-			freopen(outputPath.c_str(), "w", stdout);
+			assert(freopen(outputPath.c_str(), "w", stdout));
 		if(errorPath != "")
-			freopen(errorPath.c_str(), "a+", stderr);
+			assert(freopen(errorPath.c_str(), "a+", stderr));
 
-		execv(cmd[0], cmd);
-		return -1;
+		execvp(cmd[0], cmd);
+		exit(0);
 	}
 
 	// parent process
@@ -55,6 +56,8 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 	{
 		int status = 0;
 		waitpid(pid, &status, 0);
+
+
 		return status;
 	}
 }

@@ -13,8 +13,6 @@ bool Judge::compile()
 	char * const *compileCommand = lang.getCompileCommand(codePath);
 	int status = exec.exec(compileCommand);
 	
-	cout << status << endl;
-
 	// Runtime Error
 	if(status < 0)
 		return false;

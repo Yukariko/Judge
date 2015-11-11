@@ -47,15 +47,15 @@ void Language::initCommand()
 	{
 	case C:
 		compileCommand = new const char *[7] {"gcc", "-o", "test", "-std=c99", "-O2", nullptr, nullptr};
-		runCommand = new const char *[3] {"test", "test", nullptr};
+		runCommand = new const char *[2] {"./test", nullptr};
 		break;
 	case CPP:
 		compileCommand = new const char *[6] {"g++", "-o", "test", "-O2", nullptr, nullptr};
-		runCommand = new const char *[3] {"test", "test", nullptr};
+		runCommand = new const char *[2] {"./test", nullptr};
 		break;
 	case CPP11:
 		compileCommand = new const char *[7] {"g++", "-o", "test", "-std=c++11", "-O2", nullptr, nullptr};
-		runCommand = new const char *[3] {"test", "test", nullptr};
+		runCommand = new const char *[2] {"./test", nullptr};
 		break;
 	case JAVA:
 		break;
