@@ -78,8 +78,16 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		rlim.rlim_cur = timeLimit;
 		setrlimit(RLIMIT_CPU, &rlim);
 		
+		rlim.rlim_cur = 64 * 1024 * 1024;
+		rlim.rlim_max = 64 * 1024 * 1024;
+		setrlimit(RLIMIT_STACK, &rlim);
+
+		rlim.rlim_cur = 64 * 1024 * 1024;
+		rlim.rlim_max = 64 * 1024 * 1024;
+		setrlimit(RLIMIT_STACK, &rlim);
+
 		getrlimit(RLIMIT_AS, &rlim);
-		rlim.rlim_cur = memoryLimit;
+		rlim.rlim_cur = memoryLimit / 2 * 3;
 		setrlimit(RLIMIT_AS, &rlim);
 		
 		char * const * cmd;
