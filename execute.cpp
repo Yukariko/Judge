@@ -39,12 +39,12 @@ const string& Execute::getErrorPath() const
 	return errorPath;
 }
 
-int getUsedTime() const
+int Execute::getUsedTime() const
 {
 	return usedTime;
 }
 
-int getUsedMemory() const
+int Execute::getUsedMemory() const
 {
 	return usedMemory;
 }
