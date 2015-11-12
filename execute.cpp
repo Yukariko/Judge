@@ -48,7 +48,7 @@ const string& Execute::getErrorPath() const
 
 void Execute::printRuntimeError(const char *msg)
 {
-	FILE *ferr = fopen(errorPath, "a+");
+	FILE *ferr = fopen(errorPath.c_str(), "a+");
 	fprintf(ferr, "Runtime Error:%s\n", msg);
 	fclose(ferr);
 }
@@ -109,7 +109,7 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 				return status;
 			}
 
-			int curMemory = lang.getMemoryUsage(ruse);
+			int curMemory = lang.getMemoryUsage(pid, ruse);
 			usedMemory = max(usedMemory, curMemory);
 
 			if(usedMemory > memoryLimit)
