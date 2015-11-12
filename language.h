@@ -23,6 +23,9 @@ public:
 	Language(const string& lang);
 	Language(const Language& lang);
 	~Language();
+
+	Language& operator= (const Language& lang);
+
 	char * const *getCompileCommand() const;
 	char * const *getRunCommand() const;
 

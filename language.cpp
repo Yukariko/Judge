@@ -36,6 +36,12 @@ Language::~Language()
 		delete[] runCommand;
 }
 
+Language& Language::operator= (const Language& lang)
+{
+	langIdx = lang.langIdx;
+	initCommand();
+	return *this;
+}
 
 void Language::initCommand()
 {

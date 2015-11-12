@@ -21,9 +21,9 @@ void Execute::setErrorPath(const string& errorPath)
 {
 	this->errorPath = errorPath;
 }
-void Execute::setLanguage(const string& langs)
+void Execute::setLanguage(const string& lang)
 {
-	this->lang(Language(langs));
+	this->lang = Language(lang);
 }
 
 const string& Execute::getOutputPath() const
