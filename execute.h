@@ -24,7 +24,7 @@ public:
 	void setInputPath(const string& inputPath);
 	void setOutputPath(const string& outputPath);
 	void setErrorPath(const string& errorPath);
-	void setLanguage(const string& lang);
+	void setLanguage(const string& langs);
 
 	const string& getOutputPath() const;
 	const string& getInputPath() const;
