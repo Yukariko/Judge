@@ -11,7 +11,7 @@ using namespace std;
 class Judge
 {
 public:
-	Judge(const string& lang, const string& codePath, const string& dataPath);
+	Judge(const string& lang, const string& dataPath);
 	bool compile();
 	int run();
 	bool check(const string& answerPath, const string& outputPath);
