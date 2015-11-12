@@ -1,4 +1,5 @@
 #include "judge.h"
+#include <algorithm>
 
 Judge::Judge(const string& lang, const string& dataPath)
 {
@@ -62,7 +63,7 @@ void Judge::doJudge()
 		int ans = run();
 
 		// error
-		if(ans != 0)
+		if(ans != ACCEPT)
 		{
 			resultAnswer = ans;
 			return;
@@ -74,6 +75,9 @@ void Judge::doJudge()
 			return;
 		}
 		
+		resultTime = max(resultTime, exec.getUsedTime());
+		resultMemory = max(resultMemory, exec.getUsedMemory());
+
 	}
 
 	resultAnswer = ACCEPT;

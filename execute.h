@@ -30,6 +30,9 @@ public:
 	const string& getInputPath() const;
 	const string& getErrorPath() const;
 
+	int getUsedTime() const;
+	int getUsedMemory() const;
+
 private:
 	void printRuntimeError(const char *msg);
 

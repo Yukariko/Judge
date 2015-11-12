@@ -39,6 +39,17 @@ const string& Execute::getErrorPath() const
 	return errorPath;
 }
 
+int getUsedTime() const
+{
+	return usedTime;
+}
+
+int getUsedMemory() const
+{
+	return usedMemory;
+}
+
+
 void Execute::printRuntimeError(const char *msg)
 {
 	FILE *ferr = fopen(errorPath.c_str(), "a+");
