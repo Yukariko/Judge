@@ -2,6 +2,7 @@
 #define _LANGUAGE_H
 
 #include <iostream>
+#include "okcalls.h"
 
 using namespace std;
 
@@ -15,8 +16,14 @@ public:
 	Language(const string& lang);
 	Language(const Language& lang);
 	~Language();
-	char * const *getCompileCommand(const string& codePath);
-	char * const *getRunCommand();
+	char * const *getCompileCommand() const;
+	char * const *getRunCommand() const;
+
+	int getCpuUsage(const struct rusage& ruse) const;
+	int getMemoryUsage(int pid, const struct rusage& ruse) const;
+	bool isSafeExit(int exitcode) const;
+	void initCallCounter(int *callCounter) const;
+
 
 private:
 	void initCommand();

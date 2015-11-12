@@ -7,7 +7,9 @@
 #include <sys/user.h>
 #include <sys/time.h>
 #include <sys/resource.h>
-#include <sys/vlimit.h>
+#include <cstring>
+#include <cstdio>
+#include <algorithm>
 
 Execute::Execute(const string& inputPath, const string& outputPath, const string& errorPath)
 	: inputPath(inputPath), outputPath(outputPath), errorPath(errorPath)
@@ -26,6 +28,10 @@ void Execute::setErrorPath(const string& errorPath)
 {
 	this->errorPath = errorPath;
 }
+void Execute::setLanguage(const string& lang)
+{
+	this->lang = Language(lang);
+}
 
 const string& Execute::getOutputPath() const
 {
@@ -40,11 +46,18 @@ const string& Execute::getErrorPath() const
 	return errorPath;
 }
 
-
-int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
+void Execute::printRuntimeError(const char *msg)
 {
-	pid_t pid = fork();
+	FILE *ferr = fopen(errorPath, "a+");
+	fprintf(ferr, "Runtime Error:%s\n", msg);
+	fclose(ferr);
+}
 
+int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
+{
+	memoryLimit *= 1024 * 1024;
+
+	pid = fork();
 	// child process
 	if(pid == 0)
 	{
@@ -57,20 +70,22 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 
 		struct rlimit rlim;
 		
-		if(timeLimit != -1)
-		{
-			getrlimit(RLIMIT_CPU, &rlim);
-			rlim.rlim_cur = timeLimit;
-			setrlimit(RLIMIT_CPU, &rlim);
-		}
+		getrlimit(RLIMIT_CPU, &rlim);
+		rlim.rlim_cur = timeLimit;
+		setrlimit(RLIMIT_CPU, &rlim);
 		
-		if(memoryLimit != -1)
+		getrlimit(RLIMIT_AS, &rlim);
+		rlim.rlim_cur = memoryLimit;
+		setrlimit(RLIMIT_AS, &rlim);
+		
+		char * const * cmd;
+		if(isCompile)
+			cmd = lang.getCompileCommand();
+		else
 		{
-			getrlimit(RLIMIT_AS, &rlim);
-			rlim.rlim_cur = memoryLimit * 1024 * 1024;
-			setrlimit(RLIMIT_AS, &rlim);
+			cmd = lang.getRunCommand();
+			ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
 		}
-		//ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
 
 		execvp(cmd[0], cmd);
 		exit(0);
@@ -81,37 +96,80 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 	{
 		int status = 0;
 		struct rusage ruse;
+
+		lang.initCallCounter(callCounter);
+
+		usedMemory = 0;
 		while(true)
 		{
 			wait4(pid, &status, 0, &ruse);
 
+			if(isCompile)
+			{
+				return status;
+			}
+
+			int curMemory = lang.getMemoryUsage(ruse);
+			usedMemory = max(usedMemory, curMemory);
+
+			if(usedMemory > memoryLimit)
+			{
+				ptrace(PTRACE_KILL, pid, nullptr, nullptr);
+				return MEMORY_LIMIT_EXCEED;
+			}
+
 			// 정상 종료
 			if(WIFEXITED(status))
-			{
-				if(status == 0)
-					cout << "complete" << endl;
-				else
-					cout << "runtime error" << endl;
 				break;
-			}
 
 			int exitcode = WEXITSTATUS(status);
 
 			// 비정상 종료
-			if(exitcode != 0x05 && exitcode != 0)
+			if(lang.isSafeExit(exitcode) == false)
 			{
-				cout << "not complete" << endl;
-				break;
+				printRuntimeError(strsignal(exitcode));
+				switch(exitcode) 
+				{
+					case SIGKILL:
+					case SIGXCPU:	return TIME_LIMIT_EXCEED;
+					case SIGXFSZ:	return OUTPUT_LIMIT_EXCEED;
+				}				
+				return RUNTIME_ERROR;
 			}
 
+			// 시그널에 의한 종료
 			if(WIFSIGNALED(status))
 			{
-				cout << "signaled" << endl;
-				break;
+				int sig = WTERMSIG(status);
+				printRuntimeError(strsignal(sig));
+				switch(sig) 
+				{
+					case SIGKILL:
+					case SIGXCPU:	return TIME_LIMIT_EXCEED;
+					case SIGXFSZ:	return OUTPUT_LIMIT_EXCEED;
+				}				
+				return RUNTIME_ERROR;
 			}
+
+
+			struct user_regs_struct reg;
+
+			// check the system calls
+			ptrace(PTRACE_GETREGS, pid, nullptr, &reg);
+
+			if(!callCounter[reg.REG_SYSCALL])
+			{ //do not limit JVM syscall for using different JVM
+				char error[4096];
+				sprintf(error,"[ERROR] A Not allowed system callid:%ld\n",(long)reg.REG_SYSCALL);
+				printRuntimeError(error);
+				ptrace(PTRACE_KILL, pid, nullptr, nullptr);
+				return RUNTIME_ERROR;
+			}
+			
+			ptrace(PTRACE_SYSCALL, pid, nullptr, nullptr);
 		}
 
-		cout << ruse.ru_utime.tv_sec << " " << ruse.ru_utime.tv_usec << " " << ruse.ru_maxrss << endl;
+		usedTime = lang.getCpuUsage(ruse);
 		return status;
 	}
 }

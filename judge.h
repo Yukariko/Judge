@@ -8,8 +8,6 @@
 
 using namespace std;
 
-typedef enum {ACCEPT, WRONG_ANSWER, COMPILE_ERROR, RUN_TIME_ERROR, TIME_LIMIT_EXCEED, MEMORY_LIMIT_EXCEED} result;
-
 class Judge
 {
 public:
@@ -25,8 +23,6 @@ private:
 	Language lang;
 	Execute exec;
 	Data data;
-
-	string codePath;
 
 	int resultAnswer;
 	int resultTime;

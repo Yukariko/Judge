@@ -3,13 +3,13 @@
 
 int main(int argc, char *argv[])
 {
-	if(argc != 4)
+	if(argc != 3)
 	{
-		cout << "Usage: " << argv[0] << " " << "lang codePath dataPath" << endl;
+		cout << "Usage: " << argv[0] << " " << "lang dataPath" << endl;
 		return 0;
 	}
 
-	Judge judge(argv[1], argv[2], argv[3]);
+	Judge judge(argv[1], argv[2]);
 	judge.doJudge();
 	judge.printResult();
 	return 0;

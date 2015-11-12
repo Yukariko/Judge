@@ -1,17 +1,16 @@
 #include "judge.h"
 
-Judge::Judge(const string& lang, const string& codePath, const string& dataPath)
-	: lang(Language(lang)), codePath(codePath)
+Judge::Judge(const string& lang, const string& dataPath)
 {
 	data.setDataPath(dataPath);
+	exec.setLanguage(lang);
 	exec.setOutputPath("test.out");
 	exec.setErrorPath("test.err");
 }
 
 bool Judge::compile()
 {
-	char * const *compileCommand = lang.getCompileCommand(codePath);
-	int status = exec.exec(compileCommand);
+	int status = exec.exec(true);
 	
 	// Runtime Error
 	if(status != 0)
@@ -21,8 +20,7 @@ bool Judge::compile()
 
 int Judge::run()
 {
-	char * const *runCommand = lang.getRunCommand();
-	int status = exec.exec(runCommand, data.getTimeLimit(), data.getMemoryLimit());
+	int status = exec.exec(false, data.getTimeLimit(), data.getMemoryLimit());
 	return status;
 }
 
