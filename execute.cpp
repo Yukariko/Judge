@@ -7,6 +7,7 @@
 #include <sys/user.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/vlimit.h>
 
 Execute::Execute(const string& inputPath, const string& outputPath, const string& errorPath)
 	: inputPath(inputPath), outputPath(outputPath), errorPath(errorPath)
