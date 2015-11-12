@@ -52,22 +52,24 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 		if(outputPath != "")
 			assert(freopen(outputPath.c_str(), "w", stdout));
 		if(errorPath != "")
-			assert(freopen(errorPath.c_str(), "a+", stderr));
+			assert(freopen(errorPath.c_str(), "w", stderr));
 
 		struct rlimit rlim;
 		
 		if(timeLimit != -1)
 		{
-			getrlimit(RLIMIT_CPU, &rlim);
-			rlim.rlim_cur = timeLimit;
-			setrlimit(RLIMIT_CPU, &rlim);
+			//getrlimit(RLIMIT_CPU, &rlim);
+			//rlim.rlim_cur = timeLimit;
+			//setrlimit(RLIMIT_CPU, &rlim);
+			vlimit(LIM_CPU, timeLimit);
 		}
 		
 		if(memoryLimit != -1)
 		{
-			getrlimit(RLIMIT_AS, &rlim);
-			rlim.rlim_cur = memoryLimit * 1024 * 1024;
-			setrlimit(RLIMIT_AS, &rlim);
+			//getrlimit(RLIMIT_AS, &rlim);
+			//rlim.rlim_cur = memoryLimit * 1024 * 1024;
+			//setrlimit(RLIMIT_AS, &rlim);
+			vlimit(LIM_MAXRSS, memoryLimit * 1024 * 1024);
 		}
 		//ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
 
@@ -87,7 +89,10 @@ int Execute::exec(char * const *cmd, int timeLimit, int memoryLimit)
 			// 정상 종료
 			if(WIFEXITED(status))
 			{
-				cout << "complete" << endl;
+				if(status == 0)
+					cout << "complete" << endl;
+				else
+					cout << "runtime error" << endl;
 				break;
 			}
 
