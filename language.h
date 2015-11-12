@@ -3,6 +3,13 @@
 
 #include <iostream>
 #include "okcalls.h"
+#include <unistd.h>
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/user.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 using namespace std;
 
