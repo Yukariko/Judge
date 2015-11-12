@@ -23,7 +23,7 @@ void Execute::setErrorPath(const string& errorPath)
 }
 void Execute::setLanguage(const string& lang)
 {
-	this->lang = Language(lang);
+	this->lang(Language(lang));
 }
 
 const string& Execute::getOutputPath() const
