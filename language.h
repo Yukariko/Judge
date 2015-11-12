@@ -19,8 +19,8 @@ public:
 	char * const *getCompileCommand() const;
 	char * const *getRunCommand() const;
 
-	int getCpuUsage(const struct rusage& ruse) const;
-	int getMemoryUsage(int pid, const struct rusage& ruse) const;
+	int getCpuUsage(struct rusage& ruse) const;
+	int getMemoryUsage(int pid, struct rusage& ruse) const;
 	bool isSafeExit(int exitcode) const;
 	void initCallCounter(int *callCounter) const;
 

@@ -1,4 +1,6 @@
 #include "language.h"
+#include <cstring>
+#include <unistd.h>
 
 Language::Language() : langIdx(-1), compileCommand(nullptr), runCommand(nullptr) {}
 
@@ -72,7 +74,7 @@ char * const *Language::getRunCommand() const
 	return (char * const *)runCommand;
 }
 
-int Language::getCpuUsage(const struct rusage& ruse) const
+int Language::getCpuUsage(struct rusage& ruse) const
 {
 	int usedTime;
 	usedTime = (ruse.ru_utime.tv_sec * 1000) + (ruse.ru_utime.tv_usec / 1000);
@@ -80,7 +82,7 @@ int Language::getCpuUsage(const struct rusage& ruse) const
 	return usedTime;
 }
 
-int Language::getMemoryUsage(int pid, const struct rusage& ruse) const
+int Language::getMemoryUsage(int pid, struct rusage& ruse) const
 {
 	if(langIdx == JAVA)
 		return ruse.ru_minflt * getpagesize();
@@ -89,7 +91,7 @@ int Language::getMemoryUsage(int pid, const struct rusage& ruse) const
 	sprintf(fn, "/proc/%d/status", pid);
 
 	FILE *pf = fopen(fn, "r");
-	int m = strlen(mark);
+	int m = strlen("VmPeak: ");
 
 	int ret = 0;
 	while(pf && fgets(buf, 4096 - 1, pf))
@@ -116,7 +118,7 @@ void Language::initCallCounter(int *callCounter) const
 	if(langIdx == C || langIdx == CPP || langIdx == CPP11) // C & C++
 		for(int i=0; i==0||LANG_CV[i]; i++)
 			callCounter[LANG_CV[i]] = SYSCALL_MAX_LIMIT;
-	else if(langIdx == Java)
+	else if(langIdx == JAVA)
 		for(int i=0; i==0||LANG_JV[i]; i++)
 			callCounter[LANG_JV[i]] = SYSCALL_MAX_LIMIT;
 }
