@@ -97,13 +97,13 @@ int Language::getMemoryUsage(int pid, struct rusage& ruse) const
 	sprintf(fn, "/proc/%d/status", pid);
 
 	FILE *pf = fopen(fn, "r");
-	int m = strlen("VmPeak: ");
+	int m = strlen("VmPeak:	");
 
 	int ret = 0;
 	while(pf && fgets(buf, 4096 - 1, pf))
 	{
 		buf[strlen(buf) - 1] = 0;
-		if(strncmp(buf, "VmPeak: ", m) == 0)
+		if(strncmp(buf, "VmPeak:	", m) == 0)
 			sscanf(buf + m + 1, "%d", &ret);
 	}
 	if(pf)
