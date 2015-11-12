@@ -108,7 +108,7 @@ int Language::getMemoryUsage(int pid, struct rusage& ruse) const
 	}
 	if(pf)
 		fclose(pf);
-	return ret * 1024 * 1024;
+	return ret * 1024;
 }
 
 bool Language::isSafeExit(int exitcode) const
