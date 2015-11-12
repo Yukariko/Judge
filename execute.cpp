@@ -84,7 +84,7 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 
 		rlim.rlim_cur = 64 * 1024 * 1024;
 		rlim.rlim_max = 64 * 1024 * 1024;
-		setrlimit(RLIMIT_STACK, &rlim);
+		setrlimit(RLIMIT_FSIZE, &rlim);
 
 		getrlimit(RLIMIT_AS, &rlim);
 		rlim.rlim_cur = memoryLimit / 2 * 3;
