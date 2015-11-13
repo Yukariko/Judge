@@ -138,15 +138,15 @@ void Judge::printResult()
 
 void Judge::doJudge()
 {
-	if(data.isSpecialJudge() && !spjExec.compile())
-	{
-		resultAnswer = OJ_MISS;
-		return;
-	}
-
 	if(!exec.compile())
 	{
 		resultAnswer = COMPILE_ERROR;
+		return;
+	}
+
+	if(data.isSpecialJudge() && !spjExec.compile())
+	{
+		resultAnswer = OJ_MISS;
 		return;
 	}
 
