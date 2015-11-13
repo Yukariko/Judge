@@ -61,8 +61,11 @@ int Judge::check(const string& answerPath, const string& outputPath)
 
 		if(fgets(outString, sizeof(outString), op) == nullptr)
 		{
-			if(!feof(ap))
+			if(fgetc(ap) != EOF)
+			{
 				ans = WRONG_ANSWER;
+				break;
+			}
 			if(alen == 1)
 				break;
 			outString[0] = 0;
@@ -94,7 +97,7 @@ int Judge::check(const string& answerPath, const string& outputPath)
 			while(ai < alen && oi < olen && ansString[ai] != ' ' && ansString[ai] == outString[oi])
 				ai++, oi++;
 
-			if(ansString[ai] != ' ' || ansString[ai] != 0 || outString[oi] != ' ' || outString[oi] != 0)
+			if((ansString[ai] != ' ' && ansString[ai] != 0) || (outString[oi] != ' ' && outString[oi] != 0))
 			{
 				ans = WRONG_ANSWER;
 				break;
