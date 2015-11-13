@@ -12,9 +12,9 @@ class Judge
 {
 public:
 	Judge(const string& lang, const string& dataPath);
-	bool compile();
-	int run();
+	
 	int check(const string& answerPath, const string& outputPath);
+	int check(const string& spjPath);
 
 	void doJudge();
 	void printResult();
@@ -24,6 +24,7 @@ public:
 private:
 	Language lang;
 	Execute exec;
+	Execute spjExec;
 	Data data;
 
 	int resultAnswer;

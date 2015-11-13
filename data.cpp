@@ -27,6 +27,11 @@ int Data::getMemoryLimit() const
 	return memoryLimit;
 }
 
+const string& Data::getSpecialJudgeLang(int idx) const
+{
+	return specialJudgeLang;
+}
+
 const string& Data::getInputPath(int idx) const
 {
 	return inputPaths[idx];
@@ -35,6 +40,11 @@ const string& Data::getInputPath(int idx) const
 const string& Data::getOutputPath(int idx) const
 {
 	return outputPaths[idx];
+}
+
+bool Data::isSpecialJudge() const
+{
+	return specialJudge;
 }
 
 void Data::init()
@@ -46,7 +56,14 @@ void Data::init()
 	assert(fp != nullptr);
 
 	assert(fscanf(fp, "%d", &testCaseNum) == 1);
-	assert(fscanf(fp, "%d%d", &timeLimit, &memoryLimit) == 2);
+	assert(fscanf(fp, "%d%d%d", &timeLimit, &memoryLimit, &specialJudge) == 3);
+
+	if(specialJudge == true)
+	{
+		char buf[256];
+		assert(fscanf(fp, "%s", buf) == 1);
+		specialJudgeLang = buf;
+	}
 
 	for(int i=0; i < testCaseNum; i++)
 	{

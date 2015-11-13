@@ -9,6 +9,10 @@ Execute::Execute(const string& inputPath, const string& outputPath, const string
 {
 }
 
+void Execute::setName(const string& name)
+{
+	lang.setName(name);
+}
 void Execute::setInputPath(const string& inputPath)
 {
 	this->inputPath = inputPath;
@@ -21,9 +25,9 @@ void Execute::setErrorPath(const string& errorPath)
 {
 	this->errorPath = errorPath;
 }
-void Execute::setLanguage(const string& lang)
+void Execute::setLanguage(const string& lang, const string& name)
 {
-	this->lang = Language(lang);
+	this->lang = Language(lang, name);
 }
 
 const string& Execute::getOutputPath() const
@@ -56,6 +60,16 @@ void Execute::printRuntimeError(const char *msg)
 	fprintf(ferr, "Runtime Error:%s\n", msg);
 	fclose(ferr);
 }
+
+bool Execute::compile()
+{
+	return !exec(true);
+}
+
+int Execute::run(int timeLimit, int memoryLimit)
+{
+	return exec(false, timeLimit, memoryLimit);
+} 
 
 int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 {

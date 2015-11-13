@@ -4,7 +4,7 @@
 
 Language::Language() : langIdx(-1), compileCommand(nullptr), runCommand(nullptr) {}
 
-Language::Language(const string& lang)
+Language::Language(const string& lang, const string& name)
 {
 	langIdx = 0;
 	while(langs[langIdx] != nullptr && lang != langs[langIdx])
@@ -16,6 +16,7 @@ Language::Language(const string& lang)
 		exit(1);
 	}
 
+	this->name = name;
 	compileCommand = nullptr;
 	runCommand = nullptr;
 
@@ -38,6 +39,7 @@ Language::~Language()
 
 Language& Language::operator= (const Language& lang)
 {
+	name = lang.name;
 	langIdx = lang.langIdx;
 	initCommand();
 	return *this;
@@ -54,16 +56,22 @@ void Language::initCommand()
 	switch(langIdx)
 	{
 	case C:
-		compileCommand = new const char *[11] {"gcc", "test.c", "-o", "test", "-std=c99", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {"./test", nullptr};
+		codePath = name + ".c";
+		execPath = "./" + name;
+		compileCommand = new const char *[11] {"gcc", codePath.c_str(), "-o", "test", "-std=c99", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case CPP:
-		compileCommand = new const char *[10] {"g++", "test.cpp", "-o", "test", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {"./test", nullptr};
+		codePath = name + ".cpp";
+		execPath = "./" + name;
+		compileCommand = new const char *[10] {"g++", codePath.c_str(), "-o", "test", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case CPP11:
-		compileCommand = new const char *[11] {"g++", "test.cpp", "-o", "test", "-std=c++11", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {"./test", nullptr};
+		codePath = name + ".cpp";
+		execPath = "./" + name;
+		compileCommand = new const char *[11] {"g++", codePath.c_str(), "-o", "test", "-std=c++11", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case JAVA:
 		break;

@@ -20,7 +20,7 @@ class Language
 {
 public:
 	Language();
-	Language(const string& lang);
+	Language(const string& lang, const string& name);
 	Language(const Language& lang);
 	~Language();
 
@@ -37,6 +37,10 @@ public:
 
 private:
 	void initCommand();
+
+	string name;
+	string codePath;
+	string execPath;
 
 	int langIdx;
 	const char **compileCommand;

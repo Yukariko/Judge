@@ -16,14 +16,20 @@ public:
 	int getTestCaseNum() const;
 	int getTimeLimit() const;
 	int getMemoryLimit() const;
+	const string& getSpecialJudgeLang() const;
 	const string& getInputPath(int idx) const;
 	const string& getOutputPath(int idx) const;
+
+	bool isSpecialJudge() const;
+
 
 private:
 	void init();
 
 	string dataPath;
+	string specialJudgeLang;
 
+	bool specialJudge;
 	int testCaseNum;
 	int timeLimit;
 	int memoryLimit;
