@@ -27,7 +27,7 @@ int Data::getMemoryLimit() const
 	return memoryLimit;
 }
 
-const string& Data::getSpecialJudgeLang(int idx) const
+const string& Data::getSpecialJudgeLang() const
 {
 	return specialJudgeLang;
 }
