@@ -58,19 +58,19 @@ void Language::initCommand()
 	case C:
 		codePath = name + ".c";
 		execPath = "./" + name;
-		compileCommand = new const char *[11] {"gcc", codePath.c_str(), "-o", "test", "-std=c99", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		compileCommand = new const char *[11] {"gcc", codePath.c_str(), "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
 		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case CPP:
 		codePath = name + ".cpp";
 		execPath = "./" + name;
-		compileCommand = new const char *[10] {"g++", codePath.c_str(), "-o", "test", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		compileCommand = new const char *[10] {"g++", codePath.c_str(), "-o", name.c_str(), "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
 		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case CPP11:
 		codePath = name + ".cpp";
 		execPath = "./" + name;
-		compileCommand = new const char *[11] {"g++", codePath.c_str(), "-o", "test", "-std=c++11", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
+		compileCommand = new const char *[11] {"g++", codePath.c_str(), "-o", name.c_str(), "-std=c++11", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
 		runCommand = new const char *[2] {execPath.c_str(), nullptr};
 		break;
 	case JAVA:
