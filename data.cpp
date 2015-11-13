@@ -56,10 +56,13 @@ void Data::init()
 	assert(fp != nullptr);
 
 	assert(fscanf(fp, "%d", &testCaseNum) == 1);
-	assert(fscanf(fp, "%d%d%d", &timeLimit, &memoryLimit, &specialJudge) == 3);
 
-	if(specialJudge == true)
+	int spj;
+	assert(fscanf(fp, "%d%d%d", &timeLimit, &memoryLimit, &spj) == 3);
+
+	if(spj == true)
 	{
+		specialJudge = true;
 		char buf[256];
 		assert(fscanf(fp, "%s", buf) == 1);
 		specialJudgeLang = buf;
