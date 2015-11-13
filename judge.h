@@ -14,10 +14,12 @@ public:
 	Judge(const string& lang, const string& dataPath);
 	bool compile();
 	int run();
-	bool check(const string& answerPath, const string& outputPath);
+	int check(const string& answerPath, const string& outputPath);
 
 	void doJudge();
 	void printResult();
+
+	static void rtrim(char *str, int len) const;
 
 private:
 	Language lang;
