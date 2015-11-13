@@ -107,6 +107,19 @@ int Judge::check(const string& answerPath, const string& outputPath)
 			break;
 	}
 
+	if(ans == ACCEPT)
+	{
+		int next = fgetc(op);
+		if(next != EOF && next != '\n')
+			ans = OUTPUT_LIMIT_EXCEED;
+		else if(next == '\n')
+		{
+			next = fgetc(op);
+			if(next != EOF)
+				ans = OUTPUT_LIMIT_EXCEED;
+		}
+	}
+
 	fclose(ap);
 	fclose(op);
 	return ans;
