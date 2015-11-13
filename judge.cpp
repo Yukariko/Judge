@@ -1,5 +1,6 @@
 #include "judge.h"
 #include <algorithm>
+#include <cstring>
 
 Judge::Judge(const string& lang, const string& dataPath)
 {
