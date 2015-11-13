@@ -9,10 +9,6 @@ Execute::Execute(const string& inputPath, const string& outputPath, const string
 {
 }
 
-void Execute::setName(const string& name)
-{
-	lang.setName(name);
-}
 void Execute::setInputPath(const string& inputPath)
 {
 	this->inputPath = inputPath;
