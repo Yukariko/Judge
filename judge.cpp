@@ -36,7 +36,7 @@ int Judge::check(const string& spjPath)
 
 	int ans = fgetc(sp);
 	fclose(sp);
-	return ans == 1? ACCEPT: WRONG_ANSWER;
+	return ans == '1'? ACCEPT: WRONG_ANSWER;
 }
 
 int Judge::check(const string& answerPath, const string& outputPath)
