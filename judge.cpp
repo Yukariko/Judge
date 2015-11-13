@@ -138,7 +138,7 @@ void Judge::printResult()
 
 void Judge::doJudge()
 {
-	if(isSpecialJudge() && !spjExec.compile())
+	if(data.isSpecialJudge() && !spjExec.compile())
 	{
 		resultAnswer = OJ_MISS;
 		return;
@@ -171,7 +171,7 @@ void Judge::doJudge()
 			return;
 		}
 
-		if(isSpecialJudge())
+		if(data.isSpecialJudge())
 		{
 			ans = spjExec.run(60, 128);
 			if(ans != ACCEPT)
