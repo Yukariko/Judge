@@ -19,7 +19,7 @@ public:
 	void doJudge();
 	void printResult();
 
-	static void rtrim(char *str, int len) const;
+	static void rtrim(char *str, int& len);
 
 private:
 	Language lang;

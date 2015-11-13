@@ -25,7 +25,7 @@ int Judge::run()
 	return status;
 }
 
-void Judge::rtrim(char *str, int& len) const
+void Judge::rtrim(char *str, int& len)
 {
 	for(int i=len-1; i >= 0; i--)
 	{
