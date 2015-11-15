@@ -86,6 +86,7 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		
 		getrlimit(RLIMIT_CPU, &rlim);
 		rlim.rlim_cur = timeLimit;
+		rlim.rlim_max = timeLimit;
 		setrlimit(RLIMIT_CPU, &rlim);
 		
 		rlim.rlim_cur = STACK_LIMIT;
