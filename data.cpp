@@ -67,6 +67,8 @@ void Data::init()
 		assert(fscanf(fp, "%s", buf) == 1);
 		specialJudgeLang = buf;
 	}
+	else
+		specialJudge = false;
 
 	for(int i=0; i < testCaseNum; i++)
 	{
