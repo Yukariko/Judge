@@ -3,20 +3,34 @@
 
 #include <iostream>
 #include "language.h"
+#include "data.h"
+#include "execute.h"
 
 using namespace std;
 
 class Judge
 {
 public:
-	Judge(Language& lang, const string& codePath, const string& inPath, const string& outPath);
+	Judge(const string& lang, const string& dataPath);
+	
+	int check(const string& answerPath, const string& outputPath);
+	int check(const string& spjPath);
+
+	void doJudge();
+	void printResult();
+
+	static void rtrim(char *str, int& len);
 
 private:
 	Language lang;
-	string codePath;
-	string inPath;
-	string outPath;
-	string errorPath;
+	Execute exec;
+	Execute spjExec;
+	Data data;
+
+	int resultAnswer;
+	int resultTime;
+	int resultMemory;
+	string resultMessage;
 };
 
 #endif

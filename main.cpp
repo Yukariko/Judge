@@ -1,14 +1,16 @@
 #include "judge.h"
+#include <cstdlib>
 
 int main(int argc, char *argv[])
 {
-	if(argc != 5)
+	if(argc != 3)
 	{
-		cout << "Usage: " << argv[0] << " " << "lang codePath inputPath outputPath errorPath" << endl;
+		cout << "Usage: " << argv[0] << " " << "lang dataPath" << endl;
 		return 0;
 	}
 
-	Language lang(argv[1]);
-	Judge judge(lang, argv[2], argv[3], argv[4]);
+	Judge judge(argv[1], argv[2]);
+	judge.doJudge();
+	judge.printResult();
 	return 0;
 }
