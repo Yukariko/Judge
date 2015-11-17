@@ -76,7 +76,10 @@ void Data::init()
 		assert(fscanf(fp, "%s", buf) == 1);
 		inputPaths.push_back(buf);
 
-		assert(fscanf(fp, "%s", buf) == 1);
-		outputPaths.push_back(buf);
+		if(specialJudge == false)
+		{
+			assert(fscanf(fp, "%s", buf) == 1);
+			outputPaths.push_back(buf);
+		}
 	}
 }
