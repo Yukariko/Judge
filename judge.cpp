@@ -156,10 +156,11 @@ void Judge::doJudge()
 
 	int tc = data.getTestCaseNum();
 
+	cout << -tc << endl;
+
 	for(int i=0; i < tc; i++)
 	{
 		const string& input = data.getInputPath(i);
-		const string& answerPath = data.getOutputPath(i);
 
 		exec.setInputPath(input);
 		int ans = exec.run(data.getTimeLimit(), data.getMemoryLimit());
@@ -183,7 +184,10 @@ void Judge::doJudge()
 				ans = check(spjExec.getOutputPath());
 		}
 		else
+		{
+			const string& answerPath = data.getOutputPath(i);
 			ans = check(answerPath, exec.getOutputPath());
+		}
 		if(ans != ACCEPT)
 		{
 			resultAnswer = ans;
@@ -192,7 +196,7 @@ void Judge::doJudge()
 		
 		resultTime = max(resultTime, exec.getUsedTime());
 		resultMemory = max(resultMemory, exec.getUsedMemory());
-
+		cout << -1 << endl;
 	}
 
 	resultAnswer = ACCEPT;
