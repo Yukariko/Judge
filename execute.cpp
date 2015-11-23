@@ -69,7 +69,7 @@ int Execute::run(int timeLimit, int memoryLimit)
 
 int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 {
-	memoryLimit *= 1024 * 1024;
+	memoryLimit *= 1024;
 
 	pid = fork();
 	// child process
