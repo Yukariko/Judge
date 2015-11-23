@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	Judge judge(argv[1], argv[2]);
+	Judge judge(langs[atoi(argv[1])], argv[2]);
 	judge.doJudge();
 	judge.printResult();
 	return 0;

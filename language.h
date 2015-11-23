@@ -13,8 +13,8 @@
 
 using namespace std;
 
-static const char *langs[] = {"C", "CPP", "CPP11", "JAVA", nullptr};
-typedef enum {C,CPP,CPP11,JAVA} langCode;
+static const char *langs[] = {"","C", "CPP", "CPP11", "JAVA", nullptr};
+typedef enum {NO_LANG,C,CPP,CPP11,JAVA} langCode;
 
 class Language
 {
