@@ -123,7 +123,6 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		lang.initCallCounter(callCounter);
 
 		usedMemory = 0;
-		memoryLimit /= 1024;
 		while(true)
 		{
 			wait4(pid, &status, 0, &ruse);
