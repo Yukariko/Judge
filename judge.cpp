@@ -150,6 +150,7 @@ void Judge::doJudge()
 		return;
 	}
 
+	resultAnswer = NO_RESULT;
 	resultTime = 0;
 	resultMemory = 0;
 	resultMessage = "";

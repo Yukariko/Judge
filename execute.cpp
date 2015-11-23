@@ -193,6 +193,6 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		}
 
 		usedTime = lang.getCpuUsage(ruse);
-		return status;
+		return ACCEPT;
 	}
 }
