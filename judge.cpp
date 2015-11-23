@@ -133,7 +133,7 @@ void Judge::printResult()
 	if(resultAnswer == COMPILE_ERROR)
 		cout << resultMessage << endl;
 	else if(resultAnswer == ACCEPT)
-		cout << resultTime << " " << resultMemory << endl;
+		cout << resultTime << " " << resultMemory / 1024 << endl;
 }
 
 void Judge::doJudge()
