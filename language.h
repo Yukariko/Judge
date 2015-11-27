@@ -27,8 +27,8 @@ public:
 	Language& operator= (const Language& lang);
 
 	char * const *getCompileCommand() const;
-	char * const *getSPJCommand(const string& input, const string& output) const;
-	char * const *getRunCommand() const;
+	char * const *getSPJCommand(const string& input, const string& output);
+	char * const *getRunCommand();
 
 	int getCpuUsage(struct rusage& ruse) const;
 	int getMemoryUsage(int pid, struct rusage& ruse) const;
