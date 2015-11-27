@@ -20,7 +20,7 @@ class Language
 {
 public:
 	Language();
-	Language(const string& lang, const string& name);
+	Language(const string& lang, const string& name, const string& path);
 	Language(const Language& lang);
 	~Language();
 
