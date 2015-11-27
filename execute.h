@@ -27,7 +27,7 @@ public:
 
 	bool compile();
 	int run(int timeLimit, int memoryLimit);
-	int spj();
+	int spj(const string& input, const string& output);
 
 	void setInputPath(const string& inputPath);
 	void setOutputPath(const string& outputPath);
