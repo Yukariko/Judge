@@ -27,6 +27,7 @@ public:
 	Language& operator= (const Language& lang);
 
 	char * const *getCompileCommand() const;
+	char * const *getSPJCommand() const;
 	char * const *getRunCommand() const;
 
 	int getCpuUsage(struct rusage& ruse) const;
@@ -39,6 +40,7 @@ private:
 	void initCommand();
 
 	string name;
+	string path;
 	string codePath;
 	string execPath;
 

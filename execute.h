@@ -8,6 +8,8 @@ using namespace std;
 
 typedef enum {EMPTY, NO_RESULT, READY, RUNNING, ACCEPT, WRONG_ANSWER, COMPILE_ERROR, RUNTIME_ERROR, TIME_LIMIT_EXCEED, MEMORY_LIMIT_EXCEED, OUTPUT_LIMIT_EXCEED, OUTPUT_FORMAT_WRONG, OJ_MISS} result;
 
+enum {COMPILE, RUN, SPJ};
+
 #define FSIZE_LIMIT 64 * 1024 * 1024
 #define STACK_LIMIT 64 * 1024 * 1024
 
@@ -25,11 +27,12 @@ public:
 
 	bool compile();
 	int run(int timeLimit, int memoryLimit);
+	int spj();
 
 	void setInputPath(const string& inputPath);
 	void setOutputPath(const string& outputPath);
 	void setErrorPath(const string& errorPath);
-	void setLanguage(const string& lang, const string& name);
+	void setLanguage(const Language& lang);
 
 	const string& getOutputPath() const;
 	const string& getInputPath() const;
@@ -40,7 +43,7 @@ public:
 
 private:
 	void printRuntimeError(const char *msg);
-	int exec(bool isCompile, int timeLimit = 60, int memoryLimit = 128);
+	int exec(char * const * cmd, int timeLimit = 60, int memoryLimit = 128);
 
 	string inputPath;
 	string outputPath;
@@ -51,6 +54,7 @@ private:
 	int pid;
 	int usedTime;
 	int usedMemory;
+	int state;
 
 	int callCounter[512];
 };

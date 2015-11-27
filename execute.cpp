@@ -21,9 +21,9 @@ void Execute::setErrorPath(const string& errorPath)
 {
 	this->errorPath = errorPath;
 }
-void Execute::setLanguage(const string& lang, const string& name)
+void Execute::setLanguage(const Language& lang)
 {
-	this->lang = Language(lang, name);
+	this->lang = lang;
 }
 
 const string& Execute::getOutputPath() const
@@ -59,15 +59,23 @@ void Execute::printRuntimeError(const char *msg)
 
 bool Execute::compile()
 {
-	return !exec(true);
+	state = COMPILE;
+	return !exec(lang.getCompileCommand());
 }
 
 int Execute::run(int timeLimit, int memoryLimit)
 {
-	return exec(false, timeLimit, memoryLimit);
-} 
+	state = RUN;
+	return exec(lang.getRunCommand(), timeLimit, memoryLimit);
+}
 
-int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
+int Execute::spj(const string& input, const string& output)
+{
+	state = SPJ;
+	return exec(lang.getSPJCommand(input, output), 60, 512);
+}
+
+int Execute::exec(char * const * cmd, int timeLimit, int memoryLimit)
 {
 	memoryLimit *= 1024 * 1024;
 
@@ -101,14 +109,8 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		rlim.rlim_cur = memoryLimit / 2 * 3;
 		setrlimit(RLIMIT_AS, &rlim);
 		
-		char * const * cmd;
-		if(isCompile)
-			cmd = lang.getCompileCommand();
-		else
-		{
-			cmd = lang.getRunCommand();
+		if(state == RUN)
 			ptrace(PTRACE_TRACEME, 0, nullptr, nullptr);
-		}
 
 		execvp(cmd[0], cmd);
 		exit(0);
@@ -127,7 +129,7 @@ int Execute::exec(bool isCompile, int timeLimit, int memoryLimit)
 		{
 			wait4(pid, &status, 0, &ruse);
 
-			if(isCompile)
+			if(state != RUN)
 			{
 				return status;
 			}

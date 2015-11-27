@@ -6,6 +6,10 @@
 
 using namespace std;
 
+/*
+ * 인풋 아웃풋 데이터를 관리하는 클래스
+ */
+
 class Data
 {
 public:

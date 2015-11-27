@@ -4,7 +4,7 @@
 
 Language::Language() : langIdx(-1), compileCommand(nullptr), runCommand(nullptr) {}
 
-Language::Language(const string& lang, const string& name)
+Language::Language(const string& lang, const string& name, const string& path)
 {
 	langIdx = 0;
 	while(langs[langIdx] != nullptr && lang != langs[langIdx])
@@ -17,6 +17,7 @@ Language::Language(const string& lang, const string& name)
 	}
 
 	this->name = name;
+	this->path = path;
 	compileCommand = nullptr;
 	runCommand = nullptr;
 
@@ -40,6 +41,7 @@ Language::~Language()
 Language& Language::operator= (const Language& lang)
 {
 	name = lang.name;
+	path = lang.path;
 	langIdx = lang.langIdx;
 	initCommand();
 	return *this;
@@ -56,22 +58,22 @@ void Language::initCommand()
 	switch(langIdx)
 	{
 	case C:
-		codePath = name + ".c";
+		codePath = path + "/" + name + ".c";
 		execPath = "./" + name;
 		compileCommand = new const char *[11] {"gcc", codePath.c_str(), "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {execPath.c_str(), nullptr};
+		runCommand = new const char *[4] {execPath.c_str(), nullptr, nullptr, nullptr};
 		break;
 	case CPP:
-		codePath = name + ".cpp";
+		codePath = path + "/" + name + ".cpp";
 		execPath = "./" + name;
 		compileCommand = new const char *[10] {"g++", codePath.c_str(), "-o", name.c_str(), "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {execPath.c_str(), nullptr};
+		runCommand = new const char *[4] {execPath.c_str(), nullptr, nullptr, nullptr};
 		break;
 	case CPP11:
-		codePath = name + ".cpp";
+		codePath = path + "/" + name + ".cpp";
 		execPath = "./" + name;
 		compileCommand = new const char *[11] {"g++", codePath.c_str(), "-o", name.c_str(), "-std=c++11", "-O2", "--static", "-Wall", "-lm", "-DONLINE_JUDGE", nullptr};
-		runCommand = new const char *[2] {execPath.c_str(), nullptr};
+		runCommand = new const char *[4] {execPath.c_str(), nullptr, nullptr, nullptr};
 		break;
 	case JAVA:
 		break;
@@ -85,6 +87,14 @@ char * const *Language::getCompileCommand() const
 
 char * const *Language::getRunCommand() const
 {
+	runCommand[1] = runCommand[2] = nullptr;
+	return (char * const *)runCommand;
+}
+
+char * const *Language::getSPJCommand(const string& input, const string& output)
+{
+	runCommand[1] = input.c_str();
+	runCommand[2] = output.c_str();
 	return (char * const *)runCommand;
 }
 

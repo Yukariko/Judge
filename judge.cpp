@@ -5,12 +5,12 @@
 Judge::Judge(const string& lang, const string& dataPath)
 {
 	data.setDataPath(dataPath);
-	exec.setLanguage(lang, "test");
+	exec.setLanguage(Language(lang, "test", dataPath));
 	exec.setOutputPath("test.out");
 	exec.setErrorPath("test.err");
 	if(data.isSpecialJudge())
 	{
-		spjExec.setLanguage(data.getSpecialJudgeLang(), "spj");
+		spjExec.setLanguage(Language(data.getSpecialJudgeLang(), "spj", dataPath));
 		spjExec.setInputPath("test.out");
 		spjExec.setOutputPath("spj.out");
 		spjExec.setErrorPath("spj.err");
@@ -175,7 +175,7 @@ void Judge::doJudge()
 
 		if(data.isSpecialJudge())
 		{
-			ans = spjExec.run(60, 128);
+			ans = spjExec.spj(data.getInputPath(i), data.getOutputPath(i));
 			if(ans != ACCEPT)
 			{
 				resultAnswer = WRONG_ANSWER;

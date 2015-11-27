@@ -8,7 +8,7 @@ Data::Data() : testCaseNum(0)
 
 void Data::setDataPath(const string& dataPath)
 {
-	this->dataPath = dataPath;
+	this->dataPath = dataPath + "/input.txt";
 	init();
 }
 
