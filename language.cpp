@@ -85,7 +85,7 @@ char * const *Language::getCompileCommand() const
 	return (char * const *)compileCommand;
 }
 
-char * const *Language::getRunCommand() const
+char * const *Language::getRunCommand()
 {
 	runCommand[1] = runCommand[2] = nullptr;
 	return (char * const *)runCommand;
