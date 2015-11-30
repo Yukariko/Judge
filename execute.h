@@ -13,10 +13,10 @@ enum {COMPILE, RUN, SPJ};
 #define FSIZE_LIMIT 64 * 1024 * 1024
 #define STACK_LIMIT 64 * 1024 * 1024
 
-#ifdef __i386
-#define REG_SYSCALL orig_eax
-#else
+#if __x86_64__ || __ppc64__
 #define REG_SYSCALL orig_rax
+#else
+#define REG_SYSCALL orig_eax
 #endif
 
 
