@@ -5,7 +5,7 @@
 Judge::Judge(const string& lang, const string& dataPath)
 {
 	data.setDataPath(dataPath);
-	exec.setLanguage(Language(lang, "test", dataPath));
+	exec.setLanguage(Language(lang, "test", "/home"));
 	exec.setOutputPath("test.out");
 	exec.setErrorPath("test.err");
 	if(data.isSpecialJudge())
