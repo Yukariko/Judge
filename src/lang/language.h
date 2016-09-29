@@ -185,7 +185,7 @@ public:
 
 protected:
     virtual char * const * getCompileCommand(const string& name) = 0;
-    virtual char * const * getJudgeCommand(const string& name, const string& args) = 0;
+    virtual char * const * getJudgeCommand(const string& name, const vector<string>& args) = 0;
 
     virtual int getCpuUsage(struct rusage& ruse) const
     {
