@@ -58,7 +58,7 @@ private:
     string fail = "";
 };
 
-class SpecialJudgeData : Data
+class SpecialJudgeData : public Data
 {
 public:
     SpecialJudgeData(ifstream& ifs) : Data(ifs)

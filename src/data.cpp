@@ -1,3 +1,4 @@
+#include <stringstream>
 #include "data.h"
 
 DataIterator::DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
