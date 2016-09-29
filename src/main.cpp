@@ -1,5 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
+#include "language.h"
+#include "result.h"
 #include "judgement.h"
 
 int main(int argc, char **argv)

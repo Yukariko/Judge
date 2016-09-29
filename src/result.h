@@ -2,6 +2,9 @@
 #define _RESULT_H
 
 #include <iostream>
+#include <algorithm>
+
+using namespace std;
 
 enum ResultId {
     EMPTY, NO_RESULT, READY, RUNNING, ACCEPT, WRONG_ANSWER, COMPILE_ERROR,

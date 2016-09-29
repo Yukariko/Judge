@@ -2,6 +2,10 @@
 #define _LANGUAGE_H
 
 #include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
 #include <assert.h>
 #include <unistd.h>
 #include <sys/ptrace.h>
@@ -10,6 +14,8 @@
 #include <sys/user.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+
+using namespace std;
 
 #define FSIZE_LIMIT 64 * 1024 * 1024
 #define STACK_LIMIT 64 * 1024 * 1024

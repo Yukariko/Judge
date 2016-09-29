@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
+#include "result.h"
 #include "language.h"
 #include "data.h"
 

@@ -1,6 +1,10 @@
 #ifndef _CONFIGURATION_H
 #define _CONFIGURATION_H
 
+#include <iostream>
+
+using namespace std;
+
 class Configuration
 {
 public:

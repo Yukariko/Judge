@@ -2,6 +2,11 @@
 #define _DATA_H
 
 #include <iostream>
+#include <vector>
+
+#include "result.h"
+
+using namespace std;
 
 class DataIterator
 {
