@@ -21,8 +21,8 @@ public:
 
     Result doJudge()
     {
-        Result result;
-        if(!data.ready())
+        Result result(ResultId.ACCEPT, 0, 0);
+        if(!data->ready())
         {
             result.setResult(ResultId.OJMISS);
             return result;
@@ -41,8 +41,6 @@ private:
 
     void test(Result& result)
     {
-        result = Result(ResultId.ACCEPT, 0, 0);
-
         for(DataIterator it = data->getIterator(); it.hasItem(); it.next())
         {
             Result curResult = lang->judge(it);

@@ -28,6 +28,10 @@ public:
     int getTime() const { return _time; }
     int getMemory() const { return _memory; }
 
+    void setResult(ReulstId resultId)
+    {
+        _resultId = resultId;
+    }
 
     void setMax(const Result& r)
     {

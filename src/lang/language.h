@@ -6,6 +6,7 @@
 #include <cstring>
 #include <algorithm>
 
+#include "data.h"
 #include "result.h"
 
 #include <assert.h>
@@ -38,7 +39,7 @@ public:
     {
         switch(langId)
         {
-            case C: return new C();
+            case C: return new LanguageC();
             //case CPP: return new Cpp();
             //case JAVA: return new Java();
         }
@@ -112,7 +113,7 @@ public:
             int status = 0;
             struct rusage ruse;
 
-            usedMemory = 0;
+            int usedMemory = 0;
             while(true)
             {
                 wait4(pid, &status, 0, &ruse);
@@ -227,16 +228,22 @@ protected:
     vector<bool> callCounter(512, false);
 };
 
-class C : public Language
+class LanguageC : public Language
 {
 public:
 
 
 
 protected:
-    C()
+    LanguageC()
     {
+#ifdef __i386
         int LANG_CV[256]={85,8,SYS_time,SYS_read, SYS_uname, SYS_write, SYS_open, SYS_close, SYS_execve, SYS_access, SYS_brk, SYS_munmap, SYS_mprotect, SYS_mmap2, SYS_fstat64, SYS_set_thread_area, 252,0};
+#else
+        int LANG_CV[256] = {0,1,5,9,11,12,21,59,63,89,158,231, 8, SYS_time, SYS_read, SYS_uname, SYS_write, SYS_open,
+				SYS_close, SYS_execve, SYS_access, SYS_brk, SYS_munmap, SYS_mprotect,
+				SYS_mmap, SYS_fstat, SYS_set_thread_area, 252, SYS_arch_prctl, 231, 0 };
+#endif
         for(int i=0; LANG_CV[i]; i++)
             callCounter[LANG_CV[i]] = true;
     }
@@ -253,7 +260,7 @@ protected:
         char *execPath = new char[name.length() + 3];
         sprintf(execPath, "./%s", name.c_str());
 
-        const char **cmd = new const char *[2 + args.size()] {execPath, nullptr};
+        const char **cmd = new char *[2 + args.size()] {execPath, nullptr};
         
         for(size_t i=0; i < args.size(); i++)
         {
