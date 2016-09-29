@@ -15,7 +15,7 @@ public:
             cout << msg << '\n';
         exit(0);
     }
-    static void terminate(bool tf, const string& msg = "")
+    static void terminate(bool tf, const string& msg)
     {
         if(!tf)
             return;
