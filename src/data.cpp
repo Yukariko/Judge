@@ -28,21 +28,23 @@ Data* Data::dataFactory(int probNo)
     stringstream path(conf.getValue("dataPath"));
     path << probNo << "/config.txt";
 
-    ofstream ofs(path.str());
+    ifstream ifs(path.str());
 
-    DataId dataId;
-    ofs >> dataId;
+    
+    int id;
+    ifs >> id;
+    DataId dataId = (DataId)id; 
 
     Data* data;
 
     switch(dataId)
     {
-        case Normal: data = new Data(ofs); break;
-        case SpecialJudge: data = new SpecialJudgeData(ofs); break;
+        case Normal: data = new Data(ifs); break;
+        case SpecialJudge: data = new SpecialJudgeData(ifs); break;
         default: data = nullptr;
     }
 
-    ofs.close();
+    ifs.close();
     return data;
 }
 
@@ -64,18 +66,28 @@ const string& Data::getOutput(int idx)
     return "";
 }
 
+int Data::getTimeLimit()
+{
+    return timeLimit;
+}
+
+int Data::getMemoryLimit()
+{
+    return memoryLimit;
+}
+
 bool Data::ready()
 {
     return true;
 }
 
-Data::Data(ofstream& ofs)
+Data::Data(ifstream& ifs)
 {
-    ofs >> timeLimit >> memoryLimit;           
-    ofs >> testCaseNum;
+    ifs >> timeLimit >> memoryLimit;           
+    ifs >> testCaseNum;
 
     input.resize(testCaseNum);
     output.resize(testCaseNum);
     for(int i=0; i < testCaseNum; i++)
-        ofs >> input[i] >> output[i];
+        ifs >> input[i] >> output[i];
 }

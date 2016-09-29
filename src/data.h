@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "result.h"
+#include "configuration.h"
 
 using namespace std;
 
@@ -42,10 +43,14 @@ public:
 
     const string& getInput(int idx);
     const string& getOutput(int idx);
+
+    int getTimeLimit();
+    int getMemoryLimit();
+
     bool ready();
 
 protected:
-    Data(ofstream& ofs);
+    Data(ifstream& ifs);
 
 private:
     vector<string> input, output;
@@ -56,7 +61,7 @@ class SpecialJudgeData : Data
 {
 
 protected:
-    SpecialJudgeData(ofstream& ofs) : Data(ofs)
+    SpecialJudgeData(ifstream& ifs) : Data(ifs)
     {
     }
 };
