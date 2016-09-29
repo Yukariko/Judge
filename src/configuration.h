@@ -16,7 +16,7 @@ public:
         auto val = config.find(key);
         if(val == config.end())
             return "";
-        return *val;
+        return val->second;
     }
 
     void setValue(const string& key, const string& val)
