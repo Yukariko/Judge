@@ -13,15 +13,15 @@ class DataIterator
 public:
     DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
     DataIterator(Data *data) : data(data), idx(0) {}
-    bool hasItem() {return idx < data->getTestCaseNum();}
+    bool hasItem() const {return idx < data->getTestCaseNum();}
     void next() {idx++;}
 
-    const string& getInput() {return data->getInput(idx);}
-    const string& getOutput() {return data->getOutput(idx);}
-    int getTimeLimit() {return data->getTimeLimit();}
-    int getMemoryLimit() {return data->getMemoryLimit();}
+    const string& getInput() const {return data->getInput(idx);}
+    const string& getOutput() const {return data->getOutput(idx);}
+    int getTimeLimit() const {return data->getTimeLimit();}
+    int getMemoryLimit() const {return data->getMemoryLimit();}
 
-    bool check(Result& result, const string& answer)
+    bool check(Result& result, const string& answer) const
     {
         if(result.getResult() != ResultId.ACCEPT)
             return false;
