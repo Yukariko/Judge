@@ -79,10 +79,10 @@ Data* Data::dataFactory(int probNo)
         }
 
         ifs.close();
+        return data;
     } catch (exception e) {
         Log::terminate("Data::dataFactory " + path.str() + string(e.what()));
     }
-    return data;
 }
 
 

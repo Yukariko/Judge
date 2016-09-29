@@ -178,10 +178,10 @@ int Language::getMemoryUsage(int pid, struct rusage& ruse) const
             }
         }
         fclose(pf);
+        return ret * 1024;
     } catch(exception e) {
         Log::terminate("Language::getMemoryUsage, " + string(e.what()));
     }
-    return ret * 1024;
 }
 
 bool Language::isSafeExit(int exitcode) const

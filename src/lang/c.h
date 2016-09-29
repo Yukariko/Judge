@@ -27,9 +27,13 @@ public:
     
     virtual char * const * getCompileCommand(const string& name)
     {
-        char *codePath = new char[256];
-        sprintf(codePath, "%s.c", name.c_str());
-        return (char * const *)(new const char *[10] {"gcc", codePath, "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", nullptr});
+        try {
+            char *codePath = new char[256];
+            sprintf(codePath, "%s.c", name.c_str());
+            return (char * const *)(new const char *[10] {"gcc", codePath, "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", nullptr});
+        } catch(exception e) {
+            Log::terminate("LanguageC::getCompileCommand, " + string(e.what()));
+        } 
     }
 
     virtual char * const * getJudgeCommand(const string& name, const vector<string>& args)
@@ -48,10 +52,10 @@ public:
                 cmd[1 + i] = arg;
             }
             cmd[1 + args.size()] = nullptr;
+            return (char * const *)cmd;
         } catch(exception e) {
-            Log::terminate("LanguageC::getJudgeCommand" + e.what());
+            Log::terminate("LanguageC::getJudgeCommand" + string(e.what()));
         }
-        return (char * const *)cmd;
     }
 
 private:
