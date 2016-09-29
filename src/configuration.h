@@ -18,10 +18,7 @@ public:
 
     const string& getValue(const string& key)
     {
-        auto val = config.find(key);
-        if(val == config.end())
-            return "";
-        return val->second;
+        return config[key];
     }
 
     void setValue(const string& key, const string& val)

@@ -1,23 +1,48 @@
 #include "data.h"
 
 DataIterator::DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
+
 DataIterator::DataIterator(Data *data) : data(data), idx(0) {}
-bool DataIterator::hasItem() const {return idx < data->getTestCaseNum();}
-void DataIterator::next() {idx++;}
 
-const string& DataIterator::getInput() const {return data->getInput(idx);}
-const string& DataIterator::getOutput() const {return data->getOutput(idx);}
-int DataIterator::getTimeLimit() const {return data->getTimeLimit();}
-int DataIterator::getMemoryLimit() const {return data->getMemoryLimit();}
+bool DataIterator::hasItem() const
+{
+    return idx < data->getTestCaseNum();
+}
 
-const vector<string>& DataIterator::getArgument() const { return {""}; }
+void DataIterator::next()
+{
+    idx++;
+}
+
+const string& DataIterator::getInput() const
+{
+    return data->getInput(idx);
+}
+const string& DataIterator::getOutput() const
+{
+    return data->getOutput(idx);
+}
+int DataIterator::getTimeLimit() const
+{
+    return data->getTimeLimit();
+}
+int DataIterator::getMemoryLimit() const
+{
+    return data->getMemoryLimit();
+}
+
+const vector<string>& DataIterator::getArgument() const
+{
+    return {""};
+}
+
 
 bool DataIterator::check(Result& result, const string& answer) const
 {
-if(result.getResult() != ResultId.ACCEPT)
-    return false;
+    if(result.getResult() != ACCEPT)
+        return false;
 
-return true;
+    return true;
 }
 
 
@@ -25,7 +50,7 @@ return true;
 Data* Data::dataFactory(int probNo)
 {
     Configuration *conf = Configuration::getInstance();
-    stringstream path(conf.getValue("dataPath"));
+    stringstream path(conf->getValue("dataPath"));
     path << probNo << "/config.txt";
 
     ifstream ifs(path.str());
