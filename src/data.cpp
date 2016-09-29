@@ -1,6 +1,7 @@
 #include <sstream>
 #include "data.h"
-#include "configuration.h"
+
+Configuration* Configuration::instance;
 
 DataIterator::DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
 
