@@ -2,6 +2,7 @@
 #define _DATA_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 #include "result.h"
