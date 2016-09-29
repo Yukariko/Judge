@@ -1,5 +1,6 @@
 #include <sstream>
 #include "data.h"
+#include "configuration.h"
 
 DataIterator::DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
 
@@ -19,14 +20,17 @@ const string& DataIterator::getInput() const
 {
     return data->getInput(idx);
 }
+
 const string& DataIterator::getOutput() const
 {
     return data->getOutput(idx);
 }
+
 int DataIterator::getTimeLimit() const
 {
     return data->getTimeLimit();
 }
+
 int DataIterator::getMemoryLimit() const
 {
     return data->getMemoryLimit();
