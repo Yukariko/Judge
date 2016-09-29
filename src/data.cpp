@@ -83,6 +83,8 @@ Data* Data::dataFactory(int probNo)
     } catch (exception e) {
         Log::terminate("Data::dataFactory " + string(e.what()));
     }
+    
+    return nullptr;
 }
 
 

@@ -182,6 +182,7 @@ int Language::getMemoryUsage(int pid, struct rusage& ruse) const
     } catch(exception e) {
         Log::terminate("Language::getMemoryUsage, " + string(e.what()));
     }
+    return 0;
 }
 
 bool Language::isSafeExit(int exitcode) const

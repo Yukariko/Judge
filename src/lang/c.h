@@ -33,7 +33,8 @@ public:
             return (char * const *)(new const char *[10] {"gcc", codePath, "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", nullptr});
         } catch(exception e) {
             Log::terminate("LanguageC::getCompileCommand, " + string(e.what()));
-        } 
+        }
+        return nullptr;
     }
 
     virtual char * const * getJudgeCommand(const string& name, const vector<string>& args)
@@ -56,6 +57,7 @@ public:
         } catch(exception e) {
             Log::terminate("LanguageC::getJudgeCommand" + string(e.what()));
         }
+        return nullptr;
     }
 
 private:
