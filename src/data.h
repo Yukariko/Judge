@@ -21,6 +21,8 @@ public:
     int getTimeLimit() const {return data->getTimeLimit();}
     int getMemoryLimit() const {return data->getMemoryLimit();}
 
+    string getArgument() { return ""; }
+
     bool check(Result& result, const string& answer) const
     {
         if(result.getResult() != ResultId.ACCEPT)

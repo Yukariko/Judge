@@ -1,6 +1,9 @@
 #ifndef _C_H
 #define _C_H
 
+#include <iostream>
+#include <vector>
+#include <sys/syscall.h>
 #include "language.h"
 
 class LanguageC : public Language
@@ -33,7 +36,7 @@ protected:
         char *execPath = new char[name.length() + 3];
         sprintf(execPath, "./%s", name.c_str());
 
-        const char **cmd = const char **(new char *[2 + args.size()] {execPath, nullptr});
+        const char **cmd = (const char **)(new char *[2 + args.size()] {execPath, nullptr});
         
         for(size_t i=0; i < args.size(); i++)
         {
