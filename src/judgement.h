@@ -46,7 +46,7 @@ private:
             Result curResult = lang->judge("test", it);
             result.setMax(curResult);
 
-            if(!it.check(result))
+            if(!it.check(result, "output.txt"))
                 break;
         }
     }

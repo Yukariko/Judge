@@ -8,7 +8,6 @@
 
 #include "data.h"
 #include "result.h"
-#include "c.h"
 
 #include <assert.h>
 #include <unistd.h>

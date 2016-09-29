@@ -1,4 +1,5 @@
 #include "language.h"
+#include "c.h"
 
 Language* Language::languageFactory(LangId langId)
 {
