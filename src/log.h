@@ -11,7 +11,7 @@ public:
     {
         Result result(OJ_MISS);
         result.print();
-        if(msg != "")
+        if(msg.length() > 0)
             cout << msg << '\n';
         exit(0);
     }
