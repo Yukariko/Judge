@@ -2,6 +2,7 @@
 #define _CONFIGURATION_H
 
 #include <iostream>
+#include <unordered_map>
 
 using namespace std;
 
@@ -29,10 +30,10 @@ public:
     }
 
 protected:
-    Configuration();
+    Configuration(){}
     
 private:
-    static Configuration* instance = nullptr;
+    static Configuration* instance;
     unordered_map<string, string> config;
 };
 

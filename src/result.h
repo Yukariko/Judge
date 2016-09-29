@@ -28,7 +28,7 @@ public:
     int getTime() const { return _time; }
     int getMemory() const { return _memory; }
 
-    void setResult(ReulstId resultId)
+    void setResult(ResultId resultId)
     {
         _resultId = resultId;
     }

@@ -8,29 +8,24 @@
 
 using namespace std;
 
+class Data;
+
 class DataIterator
 {
 public:
-    DataIterator(const DataIterator& iter) : data(iter.data), idx(iter.idx) {}
-    DataIterator(Data *data) : data(data), idx(0) {}
-    bool hasItem() const {return idx < data->getTestCaseNum();}
-    void next() {idx++;}
+    DataIterator(const DataIterator& iter);
+    DataIterator(Data *data);
+    bool hasItem() const;
+    void next();
 
-    const string& getInput() const {return data->getInput(idx);}
-    const string& getOutput() const {return data->getOutput(idx);}
-    int getTimeLimit() const {return data->getTimeLimit();}
-    int getMemoryLimit() const {return data->getMemoryLimit();}
+    const string& getInput() const;
+    const string& getOutput() const;
+    int getTimeLimit() const;
+    int getMemoryLimit() const;
 
-    const vector<string>& getArgument() const { return {""}; }
+    const vector<string>& getArgument() const;
 
-    bool check(Result& result, const string& answer) const
-    {
-        if(result.getResult() != ResultId.ACCEPT)
-            return false;
-        
-        return true;
-    }
-
+    bool check(Result& result, const string& answer) const;
 private:
     Data *data;
     int idx;
@@ -41,64 +36,16 @@ class Data
 public:
     enum DataId {Normal, SpecialJudge};
 
-    static Data* dataFactory(int probNo)
-    {
-        Configuration *conf = Configuration::getInstance();
-        stringstream path(conf.getValue("dataPath"));
-        path << probNo << "/config.txt";
+    static Data* dataFactory(int probNo);
+    DataIterator getIterator();
+    int getTestCaseNum();
 
-        ifstream ifs(path.str());
-
-        DataId dataId;
-        ifs >> dataId;
-
-        Data* data;
-
-        switch(dataId)
-        {
-            case Normal: data = new Data(ifs); break;
-            case SpecialJudge: data = new SpecialJudgeData(ifs); break;
-            default: data = nullptr;
-        }
-
-        ifs.close();
-        return data;
-    }
-
-
-    DataIterator getIterator() {return DataIterator(this);}
-    int getTestCaseNum() {return testCaseNum;}
-
-    const string& getInput(int idx)
-    {
-        if(idx < testCaseNum)
-            return input[idx];
-        return "";
-    }
-
-    const string& getOutput(int idx)
-    {
-        if(idx < testCaseNum)
-            return output[idx];
-        return "";
-    }
-
-    bool ready()
-    {
-        return true;
-    }
+    const string& getInput(int idx);
+    const string& getOutput(int idx);
+    bool ready();
 
 protected:
-    Data(ifstream& ifs)
-    {
-        ifs >> timeLimit >> memoryLimit;           
-        ifs >> testCaseNum;
-
-        input.resize(testCaseNum);
-        output.resize(testCaseNum);
-        for(int i=0; i < testCaseNum; i++)
-            ifs >> input[i] >> output[i];
-    }
+    Data(ofstream& ofs);
 
 private:
     vector<string> input, output;
@@ -109,7 +56,7 @@ class SpecialJudgeData : Data
 {
 
 protected:
-    SpecialJudgeData(ifstream& ifs) : Data(ifs)
+    SpecialJudgeData(ofstream& ofs) : Data(ofs)
     {
     }
 };
