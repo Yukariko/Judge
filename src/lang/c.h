@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <exception>
+#include "log.h"
 #include <sys/syscall.h>
 #include "language.h"
 
@@ -32,18 +34,23 @@ public:
 
     virtual char * const * getJudgeCommand(const string& name, const vector<string>& args)
     {
-        char *execPath = new char[name.length() + 3];
-        sprintf(execPath, "./%s", name.c_str());
+        try {
+            char *execPath = new char[name.length() + 3];
+            sprintf(execPath, "./%s", name.c_str());
 
-        char **cmd = new char *[2 + args.size()] {execPath, nullptr};
-        
-        for(size_t i=0; i < args.size(); i++)
-        {
-            char *arg = new char[args[i].length() + 1];
-            sprintf(arg, "%s", args[i].c_str());
-            cmd[1 + i] = arg;
+            char **cmd = new char *[2 + args.size()];
+            
+            cmd[0] = execPath;
+            for(size_t i=0; i < args.size(); i++)
+            {
+                char *arg = new char[args[i].length() + 1];
+                sprintf(arg, "%s", args[i].c_str());
+                cmd[1 + i] = arg;
+            }
+            cmd[1 + args.size()] = nullptr;
+        } catch(exception e) {
+            Log::terminate("LanguageC::getJudgeCommand" + e.what());
         }
-
         return (char * const *)cmd;
     }
 

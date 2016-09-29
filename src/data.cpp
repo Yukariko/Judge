@@ -1,5 +1,7 @@
 #include <sstream>
+#include <exception>
 #include "data.h"
+#include "log.h"
 
 Configuration* Configuration::instance;
 
@@ -55,27 +57,31 @@ bool DataIterator::check(Result& result, const string& answer) const
 
 Data* Data::dataFactory(int probNo)
 {
-    Configuration *conf = Configuration::getInstance();
-    stringstream path(conf->getValue("dataPath"));
-    path << probNo << "/config.txt";
+    try {
+        Configuration *conf = Configuration::getInstance();
 
-    ifstream ifs(path.str());
-
+        stringstream path(conf->getValue("dataPath"));
+        path << probNo << "/config.txt";
     
-    int id;
-    ifs >> id;
-    DataId dataId = (DataId)id; 
+        ifstream ifs(path.str());
 
-    Data* data;
+        int id;
+        ifs >> id;
+        DataId dataId = (DataId)id; 
 
-    switch(dataId)
-    {
-        case Normal: data = new Data(ifs); break;
-        case SpecialJudge: data = new SpecialJudgeData(ifs); break;
-        default: data = nullptr;
+        Data* data;
+
+        switch(dataId)
+        {
+            case Normal: data = new Data(ifs); break;
+            case SpecialJudge: data = new SpecialJudgeData(ifs); break;
+            default: data = nullptr;
+        }
+
+        ifs.close();
+    } catch (exception e) {
+        Log::terminate("Data::dataFactory " + path.str() + string(e.what()));
     }
-
-    ifs.close();
     return data;
 }
 
@@ -85,16 +91,14 @@ int Data::getTestCaseNum() {return testCaseNum;}
 
 const string& Data::getInput(int idx)
 {
-    if(idx < testCaseNum)
-        return input[idx];
-    return fail;
+    Log::terminate(idx >= testCaseNum, "Data::getInput");
+    return input[idx];
 }
 
 const string& Data::getOutput(int idx)
 {
-    if(idx < testCaseNum)
-        return output[idx];
-    return fail;
+    Log::terminate(idx >= testCaseNum, "Data::getOutput");
+    return output[idx];
 }
 
 int Data::getTimeLimit()
@@ -114,11 +118,15 @@ bool Data::ready()
 
 Data::Data(ifstream& ifs)
 {
-    ifs >> timeLimit >> memoryLimit;           
-    ifs >> testCaseNum;
+    try {
+        ifs >> timeLimit >> memoryLimit;           
+        ifs >> testCaseNum;
 
-    input.resize(testCaseNum);
-    output.resize(testCaseNum);
-    for(int i=0; i < testCaseNum; i++)
-        ifs >> input[i] >> output[i];
+        input.resize(testCaseNum);
+        output.resize(testCaseNum);
+        for(int i=0; i < testCaseNum; i++)
+            ifs >> input[i] >> output[i];
+    } catch(exception e) {
+        Log::terminate("Data::Data," + string(e.what()));
+    }
 }

@@ -22,11 +22,6 @@ public:
     Result doJudge()
     {
         Result result(ACCEPT, 0, 0);
-        if(!data->ready())
-        {
-            result.setResult(OJ_MISS);
-            return result;
-        }
         if(compile(result))
             test(result);
 

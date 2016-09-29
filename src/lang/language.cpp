@@ -1,5 +1,7 @@
+#include <exception>
 #include "language.h"
 #include "c.h"
+#include "log.h"
 
 Language* Language::languageFactory(LangId langId)
 {
@@ -18,7 +20,7 @@ bool Language::compile(const string& name)
     int pid = fork();
     if(pid == 0)
     {
-        assert(freopen("error.txt", "w", stderr));
+        Log::terminate(freopen("error.txt", "w", stderr), "Language::compile, error.txt");
 
         struct rlimit rlim;
 
@@ -48,10 +50,9 @@ Result Language::judge(const string& name, const DataIterator& data)
     // child process
     if(pid == 0)
     {
-        if(data.getInput() != "")
-            assert(freopen(data.getInput().c_str(), "r", stdin));
-        assert(freopen("output.txt", "w", stdout));
-        assert(freopen("error.txt", "w", stderr));
+        Log::terminate(freopen(data.getInput().c_str(), "r", stdin), "Language::judge, " + data.getInput());
+        Log::terminate(freopen("output.txt", "w", stdout), "Language::judge, output.txt");
+        Log::terminate(freopen("error.txt", "w", stderr), "Language::judge, error.txt");
 
         struct rlimit rlim;
         rlim.rlim_cur = rlim.rlim_max = timeLimit;
@@ -157,25 +158,29 @@ int Language::getCpuUsage(struct rusage& ruse) const
 
 int Language::getMemoryUsage(int pid, struct rusage& ruse) const
 {
-    char fn[4096], buf[4096];
-    sprintf(fn, "/proc/%d/status", pid);
+    try {
+        char fn[4096], buf[4096];
+        sprintf(fn, "/proc/%d/status", pid);
 
-    FILE *pf = fopen(fn, "r");
-    if(pf == nullptr)
-        return 0;
-    
-    int m = strlen("VmPeak:	");
+        FILE *pf = fopen(fn, "r");
+        if(pf == nullptr)
+            return 0;
+        
+        int m = strlen("VmPeak:	");
 
-    int ret;
-    while(fgets(buf, 4096 - 1, pf))
-    {
-        if(strncmp(buf, "VmPeak:	", m) == 0)
+        int ret;
+        while(fgets(buf, 4096 - 1, pf))
         {
-            sscanf(buf + m + 1, "%d", &ret);
-            break;
+            if(strncmp(buf, "VmPeak:	", m) == 0)
+            {
+                sscanf(buf + m + 1, "%d", &ret);
+                break;
+            }
         }
+        fclose(pf);
+    } catch(exception e) {
+        Log::terminate("Language::getMemoryUsage, " + string(e.what()));
     }
-    fclose(pf);
     return ret * 1024;
 }
 
