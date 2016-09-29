@@ -21,7 +21,7 @@ public:
     int getTimeLimit() const {return data->getTimeLimit();}
     int getMemoryLimit() const {return data->getMemoryLimit();}
 
-    string getArgument() { return ""; }
+    const vector<string>& getArgument() const { return {""}; }
 
     bool check(Result& result, const string& answer) const
     {

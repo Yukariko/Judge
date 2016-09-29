@@ -12,7 +12,7 @@
 
 #include <assert.h>
 #include <unistd.h>
-#include <sys/syscall.h>
+
 #include <sys/ptrace.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -84,7 +84,7 @@ public:
         if(pid == 0)
         {
             if(data.getInput() != "")
-                assert(freopen(data.getInput(), "r", stdin));
+                assert(freopen(data.getInput().c_str(), "r", stdin));
             assert(freopen("output.txt", "w", stdout));
             assert(freopen("error.txt", "w", stderr));
 
@@ -125,7 +125,7 @@ public:
                 if(usedMemory > memoryLimit)
                 {
                     ptrace(PTRACE_KILL, pid, nullptr, nullptr);
-                    return Result(ResultId.MEMORY_LIMIT_EXCEED);
+                    return Result(MEMORY_LIMIT_EXCEED);
                 }
 
                 // 정상 종료
@@ -141,11 +141,11 @@ public:
                     switch(exitcode) 
                     {
                         case SIGKILL:
-                        case SIGXCPU:	return Result(ResultId.TIME_LIMIT_EXCEED);
-                        case SIGXFSZ:	return Result(ResultId.OUTPUT_LIMIT_EXCEED);
+                        case SIGXCPU:	return Result(TIME_LIMIT_EXCEED);
+                        case SIGXFSZ:	return Result(OUTPUT_LIMIT_EXCEED);
                     }
 
-                    return Result(ResultId.RUNTIME_ERROR);
+                    return Result(RUNTIME_ERROR);
                 }
 
                 // 시그널에 의한 종료
@@ -156,10 +156,10 @@ public:
                     switch(sig) 
                     {
                         case SIGKILL:
-                        case SIGXCPU:	return Result(ResultId.TIME_LIMIT_EXCEED);
-                        case SIGXFSZ:	return Result(ResultId.OUTPUT_LIMIT_EXCEED);
+                        case SIGXCPU:	return Result(TIME_LIMIT_EXCEED);
+                        case SIGXFSZ:	return Result(OUTPUT_LIMIT_EXCEED);
                     }				
-                    return Result(ResultId.RUNTIME_ERROR);
+                    return Result(RUNTIME_ERROR);
                 }
 
 
@@ -171,14 +171,14 @@ public:
                 if(!callCounter[reg.REG_SYSCALL])
                 { //do not limit JVM syscall for using different JVM
                     ptrace(PTRACE_KILL, pid, nullptr, nullptr);
-                    return Result(ResultId.RUNTIME_ERROR);
+                    return Result(RUNTIME_ERROR);
                 }
                 
                 ptrace(PTRACE_SYSCALL, pid, nullptr, nullptr);
             }
 
-            usedTime = getCpuUsage(ruse);
-            return Result(ResultId.ACCEPT, usedTime, usedMemory);
+            int usedTime = getCpuUsage(ruse);
+            return Result(ACCEPT, usedTime, usedMemory);
         }
     }
 

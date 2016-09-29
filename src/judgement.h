@@ -21,10 +21,10 @@ public:
 
     Result doJudge()
     {
-        Result result(ResultId.ACCEPT, 0, 0);
+        Result result(ACCEPT, 0, 0);
         if(!data->ready())
         {
-            result.setResult(ResultId.OJMISS);
+            result.setResult(OJMISS);
             return result;
         }
         if(compile(result))
