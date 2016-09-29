@@ -6,6 +6,8 @@
 #include <sys/syscall.h>
 #include "language.h"
 
+class Language;
+
 class LanguageC : public Language
 {
 public:
