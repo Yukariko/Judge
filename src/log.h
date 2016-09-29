@@ -6,6 +6,7 @@
 
 class Log
 {
+public:
     static void terminate(const string& msg = "")
     {
         Result result(OJ_MISS);
