@@ -12,7 +12,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    LangId langId = atoi(argv[1]);
+    LangId langId = (LangId)atoi(argv[1]);
     int probId = atoi(argv[2]);
     Judgement judge(langId, probId);
     Result result = judge.doJudge();

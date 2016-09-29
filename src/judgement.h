@@ -24,7 +24,7 @@ public:
         Result result(ACCEPT, 0, 0);
         if(!data->ready())
         {
-            result.setResult(OJMISS);
+            result.setResult(OJ_MISS);
             return result;
         }
         if(compile(result))
@@ -36,14 +36,14 @@ public:
 private:
     bool compile(Result& result)
     {
-        return lang->compile(result); 
+        return lang->compile("test"); 
     }
 
     void test(Result& result)
     {
         for(DataIterator it = data->getIterator(); it.hasItem(); it.next())
         {
-            Result curResult = lang->judge(it);
+            Result curResult = lang->judge("test", it);
             result.setMax(curResult);
 
             if(!it.check(result))
