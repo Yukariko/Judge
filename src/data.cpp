@@ -81,14 +81,14 @@ const string& Data::getInput(int idx)
 {
     if(idx < testCaseNum)
         return input[idx];
-    return "";
+    return fail;
 }
 
 const string& Data::getOutput(int idx)
 {
     if(idx < testCaseNum)
         return output[idx];
-    return "";
+    return fail;
 }
 
 int Data::getTimeLimit()

@@ -10,7 +10,6 @@ class LanguageC : public Language
 {
 public:
 
-protected:
     LanguageC()
     {
 #ifdef __i386

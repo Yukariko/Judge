@@ -50,18 +50,17 @@ public:
 
     bool ready();
 
-protected:
     Data(ifstream& ifs);
 
 private:
     vector<string> input, output;
     int timeLimit, memoryLimit, testCaseNum;
+    string fail = "";
 };
 
 class SpecialJudgeData : Data
 {
-
-protected:
+public:
     SpecialJudgeData(ifstream& ifs) : Data(ifs)
     {
     }
