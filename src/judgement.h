@@ -5,7 +5,7 @@
 #include <algorithm>
 
 #include "result.h"
-#include "language.h"
+#include "lang/language.h"
 #include "data.h"
 
 using namespace std;

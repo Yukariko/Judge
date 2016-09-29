@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
-#include "language.h"
+#include "lang/language.h"
 #include "result.h"
 #include "judgement.h"
 

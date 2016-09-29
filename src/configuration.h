@@ -34,6 +34,6 @@ protected:
 private:
     static Configuration* instance = nullptr;
     unordered_map<string, string> config;
-}
+};
 
 #endif

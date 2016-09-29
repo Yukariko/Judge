@@ -23,10 +23,10 @@ public:
     Result(const Result& result) : _resultId(result._resultId),
         _time(result._time), _memory(result._memory) {}
 
-    ResultId getResult() { return _resultId; }
+    ResultId getResult() const { return _resultId; }
 
-    int getTime() { return _time; }
-    int getMemory() { return _memory; }
+    int getTime() const { return _time; }
+    int getMemory() const { return _memory; }
 
 
     void setMax(const Result& r)
@@ -42,6 +42,6 @@ private:
     ResultId _resultId;
     int _time;
     int _memory;
-}
+};
 
 #endif

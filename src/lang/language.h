@@ -6,8 +6,11 @@
 #include <cstring>
 #include <algorithm>
 
+#include "result.h"
+
 #include <assert.h>
 #include <unistd.h>
+#include <sys/syscall.h>
 #include <sys/ptrace.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -36,8 +39,8 @@ public:
         switch(langId)
         {
             case C: return new C();
-            case CPP: return new Cpp();
-            case JAVA: return new Java();
+            //case CPP: return new Cpp();
+            //case JAVA: return new Java();
         }
 
         return nullptr;
@@ -221,7 +224,7 @@ protected:
         return false;
     }
 
-    vector<bool> callCounter(512, 0);
+    vector<bool> callCounter(512, false);
 };
 
 class C : public Language
@@ -242,8 +245,7 @@ protected:
     {
         char *codePath = new char[256];
         sprintf(codePath, "%s.c", name.c_str());
-        string codePath = name + ".c";
-        return (char * const *)(new const char *[] = {"gcc", codePath, "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", nullptr});
+        return (char * const *)(new const char *[10] {"gcc", codePath, "-o", name.c_str(), "-std=c99", "-O2", "--static", "-Wall", "-lm", nullptr});
     }
 
     virtual char * const * getJudgeCommand(const string& name, const vector<string>& args)
@@ -251,12 +253,12 @@ protected:
         char *execPath = new char[name.length() + 3];
         sprintf(execPath, "./%s", name.c_str());
 
-        const char **cmd = new const char *[2 + args.size()] = {execPath, nullptr};
+        const char **cmd = new const char *[2 + args.size()] {execPath, nullptr};
         
         for(size_t i=0; i < args.size(); i++)
         {
             char *arg = new char[args[i].length() + 1];
-            sprintf(argv, "%s", args[i].c_str());
+            sprintf(arg, "%s", args[i].c_str());
             cmd[1 + i] = arg;
         }
 

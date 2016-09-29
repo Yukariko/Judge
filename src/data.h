@@ -107,9 +107,8 @@ class SpecialJudgeData : Data
 {
 
 protected:
-    SpecialJudgeData(ifstream& ifs)
+    SpecialJudgeData(ifstream& ifs) : Data(ifs)
     {
-        Data(ifs);
     }
 };
 #endif
