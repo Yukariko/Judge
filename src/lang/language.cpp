@@ -10,8 +10,9 @@ Language* Language::languageFactory(LangId langId)
         case C: return new LanguageC();
         //case CPP: return new Cpp();
         //case JAVA: return new Java();
+        default: Log::terminate("Language::languageFactory");
     }
-
+    
     return nullptr;
 }
 
